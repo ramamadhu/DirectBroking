@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app">DirectBroking</string>
+    <string name="app_name">DirectBroking</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="login">Login</string>
+    <string name="PasswordHint">password</string>
+    <string name="LoginHint">Account No.</string>
+    <string name="UsernameHint">Or login with your username</string>
+    <string name="DblLogo">Direct Broking Logo</string>
+    <string name="LoginButton">Login Button</string>
+    <string name="NzxLogo">NZX Logo</string>
+    <string name="MyPortfolio">My portfolio button</string>
+    <string name="MyOrders">My share orders</string>
+    <string name="MyAccount">My share orders</string>
+    <string name="AboutUs">About Direct Broking</string>
+    
+	<color name="grey">#e6e6e6</color>
+	<color name="red">#cf142b</color>
+   
+</resources>
