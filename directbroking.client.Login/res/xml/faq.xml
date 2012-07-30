@@ -2,7 +2,28 @@
 <Faq>
     <AboutUs>
         <![CDATA[
-		<H1><span id="HTMLBodyHeader1__ctl0_lblPageHeadingLong">About Us – Online Share Broker</span></H1>
+	    <!DOCTYPE html>
+		<html>
+		<head>
+		<style type="text/css">
+		body
+		{
+		background-color:#e6e6e6;
+		}
+		h3
+		{
+		color:white;
+		text-align:center;
+		text-transform:uppercase;
+		background-color:#cf142b;
+		}
+
+		</style>
+		</head>
+		<H3><br/>
+		About Us - Online Share Broker<br/>
+		<br/>
+		</H3>
 		<p>Direct Broking provides an efficient, easy and affordable DIY share and bond trading service to thousands of investors in New Zealand. All clients have access, by phone or internet, to share markets in New Zealand, Australia and the US and UK.</p>
 		<p>Located in Wellington, we are a wholly owned subsidiary of ANZ National Bank (New Zealand's largest financial group) and we are a leading online share broker in New Zealand.</p>
 		<p>Direct Broking was established in 1992 and was the pioneer of online share trading in New Zealand in 1999. Direct Broking was then purchased by ANZ National Bank Limited in 2006.</p>
@@ -11,6 +32,92 @@
 		]]>
 	</AboutUs>
 	<ContactUs>
-	    0800240000
+	    <![CDATA[
+	    <!DOCTYPE html>
+		<html>
+		<head>
+		<style type="text/css">
+		body
+		{
+		background-color:#e6e6e6;
+		}
+		h3
+		{
+		color:white;
+		text-align:center;
+		text-transform:uppercase;
+		background-color:#cf142b;
+		}
+		p
+		{
+		background-color:rgb(255,0,255);
+		}
+		</style>
+		</head>
+	    
+	    <H3>DIRECT BROKING LIMITED</H3>
+		<H4>OFFICE HOURS</H4>
+		
+		Monday to Friday 8:30am - 6:00pm
+		
+		
+         <span class="hdrredbold">OFFICE HOURS</span><br />
+        <br />
+        Monday to Friday 8:30am - 6:00pm<br /><br /><br />
+
+        <table border=0 cellspacing=0 cellpadding=3>
+              <tr>
+                  <td nowrap><span class="hdrredbold">PHONE</span></td>
+                  <td nowrap>
+                  </td>
+              </tr>
+    <tr><td nowrap>NZ, AU, US and UK Share Trading</td>
+        <td nowrap><span class="hdrred">0800 805 777</span></td></tr>
+    <tr><td nowrap>Fixed Interest Trading</td>
+        <td nowrap><span class="hdrred">0800 800 372</span></td></tr>
+    <tr><td nowrap>New Issues</td>
+        <td nowrap><span class="hdrred">0800 800 372</span></td></tr>
+    <tr><td nowrap>Online Multi-Currency Account</td>
+        <td nowrap><span class="hdrred">0800 805 777</span></td></tr>
+    <tr><td nowrap>Direct Broking Call Account (NZ$)</td>
+        <td nowrap><span class="hdrred">0800 338 637</span></td></tr>
+    <tr><td nowrap><img height="5" src="../images/spacer.gif" width="250" /></td>
+        <td nowrap></td></tr>
+    <tr><td nowrap>If calling from overseas:</td>
+        <td nowrap><span class="hdrred">+64 4 499 6655</span></td></tr>
+    <tr><td nowrap><img height="1" src="../images/spacer.gif" width="250" />
+        <td nowrap></td></tr>
+    <tr><td nowrap><span class="hdrredbold">FAX</span></td>
+        <td nowrap><span class="hdrred">04 498 7064</span></td></tr>
+          </table>
+        <br />
+        <br />
+			
+		If calling from overseas:	+64 4 499 6655
+			
+		<H4>FAX	04 498 7064</H4>
+		
+		
+		<H4>EMAIL</H4>	
+		Help with trading	help@directbroking.co.nz
+		Online Multi-Currency Account	omca@directbroking.co.nz
+		Direct Broking Call Account	callacct@directbroking.co.nz
+		General information and queries	info@directbroking.co.nz
+		Feedback	Click here
+			
+		
+		
+		<H4>ADDRESS</H4>
+		
+		Direct Broking Limited
+		Ground Floor
+		1 Victoria Street
+		Wellington 6011
+		New Zealand
+		
+		PO Box 1790
+		Wellington 6140
+		New Zealand
+		]]>
 	</ContactUs>
 </Faq>
