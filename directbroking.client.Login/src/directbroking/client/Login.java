@@ -24,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -37,6 +38,7 @@ public class Login extends Activity implements OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
         ImageButton button = (ImageButton) findViewById(R.id.LoginButton);
         button.setOnClickListener(this);
@@ -84,7 +86,7 @@ public class Login extends Activity implements OnClickListener
 
         // Stop method tracing that the activity started during onCreate()
         android.os.Debug.stopMethodTracing();
-    } 
+    }
 
     private class loginAction extends AsyncTask<String,Void, String>
     {
@@ -158,7 +160,7 @@ public class Login extends Activity implements OnClickListener
                 aboutUsIntent.putExtra("userRequestItem", aboutUsString);
                 this.startActivity(aboutUsIntent);
                 break;
-                
+
             case R.id.contactus:
                 String contactUsString = "ContactUs";
                 Intent contactUsIntent = new Intent(this, DirectBrokingWebView.class);

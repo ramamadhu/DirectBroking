@@ -4,6 +4,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ public class DirectBrokingWebView extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dbwebview);
         WebView webview = (WebView)findViewById(R.id.dbWebView);
 
@@ -24,9 +26,6 @@ public class DirectBrokingWebView extends Activity
         {
              // Get endResult
         	String userRequest = extras.getString("userRequestItem");
-//             String htmlString = extras.getString("htmlString");
-//             webview.loadDataWithBaseURL(null, htmlString, "text/html", "utf-8", null);
-//             webview.loadData(htmlString, "text/html", "utf-8");
 
             try
             {
