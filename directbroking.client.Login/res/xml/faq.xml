@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Faq>
 
- <AboutUs>
+    <AboutUs>
 <![CDATA[
 	    <!DOCTYPE html>
 		<html>
@@ -18,10 +18,6 @@
 		text-transform:uppercase;
 		background-color:#cf142b;
 		}
-        p
-        {
-        text-align:justify;
-        }
 		</style>
 		</head>
 
@@ -37,68 +33,68 @@
 		<p>Join Direct Broking with the certainty that we have your interests at heart and that we can provide the knowledge, tools and experience to help you take control of your investment portfolio.</p>
 		</body>
 		]]>
- </AboutUs>
+    </AboutUs>
 
- <ContactUs>
-        <![CDATA[
-        	    <!DOCTYPE html>
-        		<html>
-        		<head>
-        		<style type="text/css">
-        		body
-        		{
-        		background-color:#e6e6e6;
-        		}
-        		h3
-        		{
-        		color:white;
-        		text-align:center;
-        		text-transform:uppercase;
-        		background-color:#cf142b;
-        		}
-        		p
-        		{
-        		background-color:rgb(255,0,255);
-        		}
-        		</style>
-        		</head>
-          
-           <body>
-           <H3><br/>
-           DIRECT BROKING LIMITED<br/>
-        <br/></H3>
-        <H4>OFFICE HOURS</H4>
-        
-        Monday to Friday 8:30am - 6:00pm
-              <br />
-        
-        <H4>PHONE</H4>
-        <table border="0">
-        <tr>
-        <td>NZ, AU, US and UK Share Trading</td>
-        <td><a href="tel:0800 805 777">0800 805 777</td>
-        </tr>
-        <tr>
-        <td>Fixed Interest Trading</td>
-        <td><a href="tel:0800 800 372">0800 800 372</td>
-        </tr>
-        <tr>
-        <td>New Issues</td>
-        <td><a href="tel:0800 800 372">0800 800 372</td>
-        </tr>
-        <tr>
-        <td>Online Multi-Currency Account</td>
-        <td><a href="tel:0800 805 777">0800 805 777</td>
-        </tr>
-        <tr>
-        <td>Direct Broking Call Account (NZ$)</td>
-        <td><a href="tel:0800 338 637">0800 338 637</td>
-        </tr>
-        <tr>
-        <td>If calling from overseas</td>
-        <td><a href="tel:+644499 6655">+64 4 499 6655</td>
-        </tr>
-        </table>
+    <ContactUs>
+<![CDATA[
+	    <!DOCTYPE html>
+		<html>
+		<head>
+		<style type="text/css">
+		body
+		{
+		background-color:#e6e6e6;
+		}
+		h3
+		{
+		color:white;
+		text-align:center;
+		text-transform:uppercase;
+		background-color:#cf142b;
+		}
+		p
+		{
+		background-color:rgb(255,0,255);
+		}
+		</style>
+		</head>
+  
+	    <body>
+	    <H3><br/>
+	    DIRECT BROKING LIMITED<br/>
+		<br/></H3>
+		<H4>OFFICE HOURS</H4>
+		
+		Monday to Friday 8:30am - 6:00pm
+        <br />
+
+		<H4>PHONE</H4>
+		 <table border="0">
+		  <tr>
+		    <td>NZ, AU, US and UK Share Trading</td>
+		    <td><a href="tel:0800 805 777">0800 805 777</td>
+		  </tr>
+		  <tr>
+		    <td>Fixed Interest Trading</td>
+		    <td><a href="tel:0800 800 372">0800 800 372</td>
+		  </tr>
+		  <tr>
+		    <td>New Issues</td>
+		    <td><a href="tel:0800 800 372">0800 800 372</td>
+		    </tr>
+		  <tr>
+		    <td>Online Multi-Currency Account</td>
+		    <td><a href="tel:0800 805 777">0800 805 777</td>
+		    </tr>
+		  <tr>
+		    <td>Direct Broking Call Account (NZ$)</td>
+		    <td><a href="tel:0800 338 637">0800 338 637</td>
+		  </tr>
+		  <tr>
+		    <td>If calling from overseas</td>
+		    <td><a href="tel:+644499 6655">+64 4 499 6655</td>
+		  </tr>
+		</table>
 			
 		<H4>FAX</H4>
 		04 498 7064
@@ -122,20 +118,20 @@
         <td>Queries</td>
         <td><a href="mailto:info@directbroking.co.nz">info@directbroking.co.nz</td>
         </tr>
-        </table>
-
-        <H4>ADDRESS</H4>
-        Direct Broking Limited<br/>
-        Ground Floor<br/>
-        1 Victoria Street<br/>
-        Wellington 6011<br/>
-        New Zealand<br/>
-        <br/>
-        PO Box 1790<br/>
-        Wellington 6140<br/>
-        New Zealand<br/>
-        </body>
+		</table>
+  
+		<H4>ADDRESS</H4>
+  		Direct Broking Limited<br/>
+		Ground Floor<br/>
+		1 Victoria Street<br/>
+		Wellington 6011<br/>
+		New Zealand<br/>
+		<br/>
+		PO Box 1790<br/>
+		Wellington 6140<br/>
+		New Zealand<br/>
+  </body>
 		]]>
- </ContactUs>
+    </ContactUs>
 
 </Faq>
