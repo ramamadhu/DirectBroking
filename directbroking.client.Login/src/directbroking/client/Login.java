@@ -16,6 +16,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -42,6 +44,18 @@ public class Login extends Activity implements OnClickListener
         setContentView(R.layout.login);
         ImageButton button = (ImageButton) findViewById(R.id.LoginButton);
         button.setOnClickListener(this);
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if(activeNetworkInfo == null)
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "Service requires network connection. Please check your connection.";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
     }
 
     // Implement the OnClickListener callback
@@ -72,7 +86,7 @@ public class Login extends Activity implements OnClickListener
     {
         Context context = getApplicationContext();
         CharSequence text = "Please login using your account number or username and password";
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.setGravity(Gravity.CENTER, 0, 0);
