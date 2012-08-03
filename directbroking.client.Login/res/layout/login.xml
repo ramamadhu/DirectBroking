@@ -23,11 +23,12 @@
         android:layout_height="40dp"
         android:layout_below="@+id/DblLogo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="75dp"
         android:ems="10"
         android:hint="@string/LoginHint"
         android:inputType="text"
-        android:state_focused="true" android:color="@color/red" >
+        android:state_focused="true"
+        android:color="@color/red" >
 
         <requestFocus />
 
@@ -73,7 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/mpi_nzx" 
-        android:contentDescription="@string/NzxLogo"/>
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@string/NzxLogo"
+        android:src="@drawable/mpi_nzx" />
 
 </RelativeLayout>
