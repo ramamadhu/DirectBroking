@@ -16,8 +16,8 @@
     <string name="MyOrders">My share orders</string>
     <string name="MyAccount">My share orders</string>
     <string name="AboutUs">About Direct Broking</string>
-    
-	<color name="grey">#e6e6e6</color>
-	<color name="red">#cf142b</color>
-   
+
+    <color name="grey">#e6e6e6</color>
+    <color name="red">#cf142b</color>
+
 </resources>

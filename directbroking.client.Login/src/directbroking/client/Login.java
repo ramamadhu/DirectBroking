@@ -11,6 +11,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -21,14 +24,18 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener
@@ -42,8 +49,28 @@ public class Login extends Activity implements OnClickListener
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
-        ImageButton button = (ImageButton) findViewById(R.id.LoginButton);
-        button.setOnClickListener(this);
+        ImageButton loginButton = (ImageButton) findViewById(R.id.LoginButton);
+        loginButton.setOnClickListener(this);
+
+        EditText passwordTextBox = (EditText) findViewById(R.id.Password);
+        passwordTextBox.setOnEditorActionListener(new OnEditorActionListener()
+        {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if(actionId==EditorInfo.IME_ACTION_DONE)
+                {
+                    onClick(v);
+                }
+            return false;
+            }
+        });
+        isConnectedToNetwork();
+    }
+
+    private boolean isConnectedToNetwork()
+    {
+        boolean haveNetworkConnection = true;
+
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if(activeNetworkInfo == null)
@@ -55,12 +82,19 @@ public class Login extends Activity implements OnClickListener
             Toast toast = Toast.makeText(context, text, duration);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-        }
-    }
 
+            haveNetworkConnection = false;
+        }
+        return haveNetworkConnection;
+    }
     // Implement the OnClickListener callback
     public void onClick(View v)
     {
+        if (!isConnectedToNetwork())
+        {
+            return;
+        }
+
         EditText accountNum = (EditText) findViewById(R.id.AccountNo);
         String accountNumString = accountNum.getText().toString();
         EditText password = (EditText) findViewById(R.id.Password);
@@ -68,7 +102,7 @@ public class Login extends Activity implements OnClickListener
 
         if ((accountNumString.equals("")) || (passwordString.equals("")))
         {
-            displayNotification();
+            displayNotification("Please login using your account number or username and password");
         }
         else
         {
@@ -77,15 +111,14 @@ public class Login extends Activity implements OnClickListener
             dialog.setMessage("Verifying username and password...");
             dialog.show();
 
-            loginAction loginActionTask = new loginAction(this);
+            LoginActionTask loginActionTask = new LoginActionTask(this);
             loginActionTask.execute(new String[] {accountNumString, passwordString});
         }
     }
 
-    private void displayNotification()
+    private void displayNotification(CharSequence text)
     {
         Context context = getApplicationContext();
-        CharSequence text = "Please login using your account number or username and password";
         int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, text, duration);
@@ -102,11 +135,11 @@ public class Login extends Activity implements OnClickListener
         android.os.Debug.stopMethodTracing();
     }
 
-    private class loginAction extends AsyncTask<String,Void, String>
+    private class LoginActionTask extends AsyncTask<String,Void, String>
     {
         Context AppContext;
 
-        private loginAction(Context context)
+        private LoginActionTask(Context context)
         {
             AppContext = context.getApplicationContext();
         }
@@ -146,11 +179,32 @@ public class Login extends Activity implements OnClickListener
         @Override
         protected void onPostExecute(String result)
         {
-            Intent myPortfolio = new Intent(AppContext, DirectBrokingWebView.class);
-            myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            myPortfolio.putExtra("htmlString", result);
-            AppContext.startActivity(myPortfolio);
             dialog.dismiss();
+            if(onLoginSuccess(result))
+            {
+                Intent myPortfolio = new Intent(AppContext, DirectBrokingWebView.class);
+                myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                myPortfolio.putExtra("htmlString", result);
+                AppContext.startActivity(myPortfolio);
+            }
+            else
+            {
+                displayNotification("Invalid username or password. Please re-enter");
+            }
+        }
+
+        private boolean onLoginSuccess(String htmlString)
+        {
+            boolean result= true;
+            Document document = Jsoup.parse(htmlString);
+            Element title = document.select("TITLE").first();
+
+            if( title.text().equals("Login | Direct Broking"))
+            {
+                result = false;
+            }
+
+            return result;
         }
     }
 
