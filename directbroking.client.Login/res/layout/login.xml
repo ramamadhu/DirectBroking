@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/AccountNo"
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/DblLogo"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="75dp"
@@ -46,8 +46,8 @@
 
     <EditText
         android:id="@+id/Password"
-        android:layout_width="168dp"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
         android:layout_alignLeft="@+id/AccountNo"
         android:layout_alignRight="@+id/AccountNo"
         android:layout_below="@+id/Username"
