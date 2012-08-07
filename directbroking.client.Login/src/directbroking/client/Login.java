@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -187,10 +188,6 @@ public class Login extends Activity implements OnClickListener
                 myPortfolio.putExtra("htmlString", result);
                 AppContext.startActivity(myPortfolio);
             }
-            else
-            {
-                displayNotification("Invalid username or password. Please re-enter");
-            }
         }
 
         private boolean onLoginSuccess(String htmlString)
@@ -201,6 +198,13 @@ public class Login extends Activity implements OnClickListener
 
             if( title.text().equals("Login | Direct Broking"))
             {
+                Elements elements = document.select("span[id~=SystemMsg1_lblText]");
+                for (Element element : elements)
+                {
+                    displayNotification(element.html());
+                    break;
+                }
+
                 result = false;
             }
 
