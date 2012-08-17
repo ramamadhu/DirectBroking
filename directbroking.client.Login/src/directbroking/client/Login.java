@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -48,10 +49,14 @@ public class Login extends Activity implements OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        System.out.println("Runnng onCreate");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
         ImageButton loginButton = (ImageButton) findViewById(R.id.LoginButton);
         loginButton.setOnClickListener(this);
+        String colorStr = getResources().getString(R.color.grey);
+        int color = Color.parseColor(getResources().getString(R.color.grey));
+        System.out.printf("colorStr: %s colorInt: %d\n", colorStr, color);
 
         EditText passwordTextBox = (EditText) findViewById(R.id.Password);
         passwordTextBox.setOnEditorActionListener(new OnEditorActionListener()
@@ -66,6 +71,37 @@ public class Login extends Activity implements OnClickListener
             }
         });
         isConnectedToNetwork();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart(); // Always call the superclass
+        System.out.println("Runnng onStart");
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause(); // Always call the superclass
+        System.out.println("Runnng onPause");
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume(); // Always call the superclass
+        System.out.println("Runnng onResume");
+        EditText accountNum = (EditText) findViewById(R.id.AccountNo);
+        EditText password = (EditText) findViewById(R.id.Password);
+        accountNum.setText("");
+        password.setText("");
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy(); // Always call the superclass
     }
 
     private boolean isConnectedToNetwork()
@@ -127,15 +163,6 @@ public class Login extends Activity implements OnClickListener
         toast.show();
     }
 
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy(); // Always call the superclass
-
-        // Stop method tracing that the activity started during onCreate()
-        android.os.Debug.stopMethodTracing();
-    }
-
     private class LoginActionTask extends AsyncTask<String,Void, String>
     {
         Context AppContext;
@@ -185,9 +212,27 @@ public class Login extends Activity implements OnClickListener
             {
                 Intent myPortfolio = new Intent(AppContext, DirectBrokingWebView.class);
                 myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                myPortfolio.putExtra("htmlString", result);
+                myPortfolio.putExtra("htmlString", fetchPortolioData(result));
                 AppContext.startActivity(myPortfolio);
+//                Intent myPortfolio = new Intent(AppContext, TableView.class);
+//                myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                myPortfolio.putExtra("htmlString", fetchPortolioData(result));
+//                AppContext.startActivity(myPortfolio);
             }
+        }
+
+        private String fetchPortolioData(String htmlData)
+        {
+            String rawPortfolioTable;
+            Document document = Jsoup.parse(htmlData);
+//            Element rawTable = document.select("table[id=PortfolioPositionsTable]").first();
+//            rawPortfolioTable = rawTable.html();
+            String rawTable = document.select("table[id=PortfolioPositionsTable]").outerHtml();
+            Document tableDoc = Jsoup.parse(htmlData);
+            rawPortfolioTable = tableDoc.select("td:eq(0),td:eq(2), td:eq(3), td:eq(5)").outerHtml();
+//            rawPortfolioTable = "<html><body>" + Table.html() + "</body></html>";
+//            Document rawTableDoc = Jsoup
+            return rawPortfolioTable;
         }
 
         private boolean onLoginSuccess(String htmlString)

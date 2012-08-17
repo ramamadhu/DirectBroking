@@ -17,7 +17,13 @@
     <string name="MyAccount">My share orders</string>
     <string name="AboutUs">About Direct Broking</string>
 
-    <color name="grey">#e6e6e6</color>
+    <color name="grey">#ffe6e6e6</color>
     <color name="red">#cf142b</color>
+
+    <string name="textview">TextView</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_dbtext_view">DBTextView</string>
+    <string name="title_activity_table_view">TableView</string>
 
 </resources>

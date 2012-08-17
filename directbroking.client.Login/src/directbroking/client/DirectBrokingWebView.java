@@ -3,6 +3,7 @@ package directbroking.client;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 import android.webkit.WebView;
@@ -16,6 +17,9 @@ public class DirectBrokingWebView extends Activity
     {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.dbwebview);
+        WebView dbWebview = (WebView) findViewById(R.id.dbWebView);
+        dbWebview.setBackgroundColor(getResources().getColor(R.color.grey));
 
         Bundle extras = getIntent().getExtras();
         if(extras != null)
@@ -37,7 +41,6 @@ public class DirectBrokingWebView extends Activity
         // Get endResult
         String htmlStringRequest;
         String userRequest = extras.getString("userRequestItem");
-        setContentView(R.layout.dbwebview);
         WebView webview = (WebView)findViewById(R.id.dbWebView);
 
         try
@@ -69,9 +72,9 @@ public class DirectBrokingWebView extends Activity
     private void ProcessHtmlRequests(Bundle extras)
     {
         String htmlStringRequest = extras.getString("htmlString");
-        setContentView(R.layout.dbwebview);
         WebView webview = (WebView)findViewById(R.id.dbWebView);
-//        webview.loadData(htmlStringRequest, "text/html", "utf-8");
-        webview.loadDataWithBaseURL(null, htmlStringRequest, "text/html", "utf-8", null);
+//        webview.setBackgroundColor(Color.parseColor(getResources().getString(R.color.grey)));
+        webview.setBackgroundColor(Color.parseColor("#e6e6e6"));
+        webview.loadDataWithBaseURL("http://www.directbroking.co.nz/", htmlStringRequest, "text/html", "utf-8", null);
     }
 }
