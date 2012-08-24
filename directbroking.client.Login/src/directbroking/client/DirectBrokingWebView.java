@@ -3,6 +3,7 @@ package directbroking.client;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 import android.webkit.WebView;
@@ -10,8 +11,6 @@ import android.widget.Toast;
 
 public class DirectBrokingWebView extends Activity
 {
-    String htmlString;
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -19,38 +18,80 @@ public class DirectBrokingWebView extends Activity
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dbwebview);
-        WebView webview = (WebView)findViewById(R.id.dbWebView);
+        WebView dbWebview = (WebView) findViewById(R.id.dbWebView);
+        dbWebview.setBackgroundColor(getResources().getColor(R.color.grey));
 
         Bundle extras = getIntent().getExtras();
         if(extras != null)
         {
-             // Get endResult
-        	String userRequest = extras.getString("userRequestItem");
-
-            try
+            if (extras.getString("userRequestItem") != null)
             {
-                XmlPullParser xpp = getResources().getXml(R.xml.faq);
-                while (xpp.getEventType() != XmlPullParser.END_DOCUMENT)
-                {
-                    if (xpp.getEventType()==XmlPullParser.START_TAG)
-                    {
-                      if (xpp.getName().equals(userRequest))
-                      {
-                    	  xpp.next();
-                          htmlString = xpp.getText();
-                          webview.loadData(htmlString, "text/html", "utf-8");
-                          break;
-                      }
-                    }
-                    xpp.next();
-                }
+                ProcessFaqRequests(extras);
             }
-            catch(Throwable t)
+            else if (extras.getString("htmlString") != null)
             {
-                Toast
-                  .makeText(this, "Request failed: "+t.toString(), Toast.LENGTH_LONG)
-                  .show();
+                ProcessHtmlRequests(extras);
             }
         }
     }
+
+    private void ProcessFaqRequests(Bundle extras)
+    {
+        // Get endResult
+        String htmlStringRequest;
+        String userRequest = extras.getString("userRequestItem");
+        WebView webview = (WebView)findViewById(R.id.dbWebView);
+
+        try
+        {
+            XmlPullParser xpp = getResources().getXml(R.xml.faq);
+            while (xpp.getEventType() != XmlPullParser.END_DOCUMENT)
+            {
+                if (xpp.getEventType()==XmlPullParser.START_TAG)
+                {
+                  if (xpp.getName().equals(userRequest))
+                  {
+                      xpp.next();
+                      htmlStringRequest = xpp.getText();
+                      webview.loadData(htmlStringRequest, "text/html", "utf-8");
+                      break;
+                  }
+                }
+                xpp.next();
+            }
+        }
+        catch(Throwable t)
+        {
+            Toast
+              .makeText(this, "Request failed: "+t.toString(), Toast.LENGTH_LONG)
+              .show();
+        }
+    }
+
+    private void ProcessHtmlRequests(Bundle extras)
+    {
+        String htmlStringRequest = extras.getString("htmlString");
+        WebView webview = (WebView)findViewById(R.id.dbWebView);
+        webview.setBackgroundColor(Color.parseColor("#e6e6e6"));
+        webview.loadDataWithBaseURL("https://www.directbroking.co.nz/DirectTrade/dynamic/", htmlStringRequest, "text/html", "utf-8", null);
+//        SQLiteDatabase dbase = new SQLiteDatabase()
+    }
 }
+
+//public class DatabaseHelper extends SQLiteOpenHelper
+//{
+//    static final String dbName="DirectBrokingDB";
+//    static final String employeeTable="Portfolio";
+//    @Override
+//    public void onCreate(SQLiteDatabase arg0)
+//    {
+//        // TODO Auto-generated method stub
+//
+//    }
+//    @Override
+//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+//    {
+//        // TODO Auto-generated method stub
+//
+//    }
+//}

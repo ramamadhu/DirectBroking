@@ -8,25 +8,44 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 public class Login extends Activity implements OnClickListener
@@ -38,15 +57,98 @@ public class Login extends Activity implements OnClickListener
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        System.out.println("Runnng onCreate");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
-        ImageButton button = (ImageButton) findViewById(R.id.LoginButton);
-        button.setOnClickListener(this);
+        ImageButton loginButton = (ImageButton) findViewById(R.id.LoginButton);
+        loginButton.setOnClickListener(this);
+        String colorStr = getResources().getString(R.color.grey);
+        int color = Color.parseColor(getResources().getString(R.color.grey));
+        System.out.printf("colorStr: %s colorInt: %d\n", colorStr, color);
+
+        EditText passwordTextBox = (EditText) findViewById(R.id.Password);
+        passwordTextBox.setOnEditorActionListener(new OnEditorActionListener()
+        {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
+            {
+                if(actionId==EditorInfo.IME_ACTION_DONE)
+                {
+                    onClick(v);
+                }
+            return false;
+            }
+        });
+        isConnectedToNetwork();
+        ImageView img = (ImageView) findViewById(R.id.NzxLogo);
+        img.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.nzx.com"));
+            startActivity(intent);
+        }
+    });
+
     }
 
+
+    @Override
+    public void onStart()
+    {
+        super.onStart(); // Always call the superclass
+        System.out.println("Runnng onStart");
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause(); // Always call the superclass
+        System.out.println("Runnng onPause");
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume(); // Always call the superclass
+        System.out.println("Runnng onResume");
+        EditText accountNum = (EditText) findViewById(R.id.AccountNo);
+        EditText password = (EditText) findViewById(R.id.Password);
+        accountNum.setText("");
+        password.setText("");
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy(); // Always call the superclass
+    }
+
+    private boolean isConnectedToNetwork()
+    {
+        boolean haveNetworkConnection = true;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if(activeNetworkInfo == null)
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "Service requires network connection. Please check your connection.";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+
+            haveNetworkConnection = false;
+        }
+        return haveNetworkConnection;
+    }
     // Implement the OnClickListener callback
     public void onClick(View v)
     {
+        if (!isConnectedToNetwork())
+        {
+            return;
+        }
+
         EditText accountNum = (EditText) findViewById(R.id.AccountNo);
         String accountNumString = accountNum.getText().toString();
         EditText password = (EditText) findViewById(R.id.Password);
@@ -54,7 +156,7 @@ public class Login extends Activity implements OnClickListener
 
         if ((accountNumString.equals("")) || (passwordString.equals("")))
         {
-            displayNotification();
+            displayNotification("Please login using your account number or username and password");
         }
         else
         {
@@ -63,36 +165,26 @@ public class Login extends Activity implements OnClickListener
             dialog.setMessage("Verifying username and password...");
             dialog.show();
 
-            loginAction loginActionTask = new loginAction(this);
+            LoginActionTask loginActionTask = new LoginActionTask(this);
             loginActionTask.execute(new String[] {accountNumString, passwordString});
         }
     }
 
-    private void displayNotification()
+    private void displayNotification(CharSequence text)
     {
         Context context = getApplicationContext();
-        CharSequence text = "Please login using your account number or username and password";
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
-    @Override
-    public void onDestroy()
-    {
-        super.onDestroy(); // Always call the superclass
-
-        // Stop method tracing that the activity started during onCreate()
-        android.os.Debug.stopMethodTracing();
-    }
-
-    private class loginAction extends AsyncTask<String,Void, String>
+    private class LoginActionTask extends AsyncTask<String,Void, String>
     {
         Context AppContext;
 
-        private loginAction(Context context)
+        private LoginActionTask(Context context)
         {
             AppContext = context.getApplicationContext();
         }
@@ -103,7 +195,13 @@ public class Login extends Activity implements OnClickListener
             String accountNumString = inputs[0];
             String passwordString = inputs[1];
             String responseBody = "";
-            HttpClient client = new DefaultHttpClient();
+
+            SchemeRegistry schemeRegistry = new SchemeRegistry();
+            schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+            HttpParams params = new BasicHttpParams();
+            ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
+            HttpClient client = new DefaultHttpClient(mgr, params);
+
             try
             {
                 HttpPost httppost = new HttpPost("https://www.directbroking.co.nz/DirectTrade/dynamic/signon.aspx?Login=Go+%3E%3E");
@@ -132,11 +230,43 @@ public class Login extends Activity implements OnClickListener
         @Override
         protected void onPostExecute(String result)
         {
-            Intent myPortfolio = new Intent(AppContext, DirectBrokingWebView.class);
-            myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            myPortfolio.putExtra("htmlString", result);
-            AppContext.startActivity(myPortfolio);
             dialog.dismiss();
+            if(onLoginSuccess(result))
+            {
+                Intent myPortfolio = new Intent(AppContext, DirectBrokingWebView.class);
+                myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                myPortfolio.putExtra("htmlString", fetchPortolioData(result));
+                AppContext.startActivity(myPortfolio);
+            }
+        }
+
+        private String fetchPortolioData(String htmlData)
+        {
+            Document document = Jsoup.parse(htmlData);
+            String table = document.select("table[id=PortfolioPositionsTable]").outerHtml();
+
+            return table;
+        }
+
+        private boolean onLoginSuccess(String htmlString)
+        {
+            boolean result= true;
+            Document document = Jsoup.parse(htmlString);
+            Element title = document.select("TITLE").first();
+
+            if( title.text().equals("Login | Direct Broking"))
+            {
+                Elements elements = document.select("span[id~=SystemMsg1_lblText]");
+                for (Element element : elements)
+                {
+                    displayNotification(element.html());
+                    break;
+                }
+
+                result = false;
+            }
+
+            return result;
         }
     }
 
