@@ -8,8 +8,14 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,6 +29,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -36,6 +43,7 @@ import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -71,7 +79,16 @@ public class Login extends Activity implements OnClickListener
             }
         });
         isConnectedToNetwork();
+        ImageView img = (ImageView) findViewById(R.id.NzxLogo);
+        img.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.nzx.com"));
+            startActivity(intent);
+        }
+    });
+
     }
+
 
     @Override
     public void onStart()
@@ -178,7 +195,13 @@ public class Login extends Activity implements OnClickListener
             String accountNumString = inputs[0];
             String passwordString = inputs[1];
             String responseBody = "";
-            HttpClient client = new DefaultHttpClient();
+
+            SchemeRegistry schemeRegistry = new SchemeRegistry();
+            schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+            HttpParams params = new BasicHttpParams();
+            ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
+            HttpClient client = new DefaultHttpClient(mgr, params);
+
             try
             {
                 HttpPost httppost = new HttpPost("https://www.directbroking.co.nz/DirectTrade/dynamic/signon.aspx?Login=Go+%3E%3E");
@@ -214,25 +237,15 @@ public class Login extends Activity implements OnClickListener
                 myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 myPortfolio.putExtra("htmlString", fetchPortolioData(result));
                 AppContext.startActivity(myPortfolio);
-//                Intent myPortfolio = new Intent(AppContext, TableView.class);
-//                myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                myPortfolio.putExtra("htmlString", fetchPortolioData(result));
-//                AppContext.startActivity(myPortfolio);
             }
         }
 
         private String fetchPortolioData(String htmlData)
         {
-            String rawPortfolioTable;
             Document document = Jsoup.parse(htmlData);
-//            Element rawTable = document.select("table[id=PortfolioPositionsTable]").first();
-//            rawPortfolioTable = rawTable.html();
-            String rawTable = document.select("table[id=PortfolioPositionsTable]").outerHtml();
-            Document tableDoc = Jsoup.parse(htmlData);
-            rawPortfolioTable = tableDoc.select("td:eq(0),td:eq(2), td:eq(3), td:eq(5)").outerHtml();
-//            rawPortfolioTable = "<html><body>" + Table.html() + "</body></html>";
-//            Document rawTableDoc = Jsoup
-            return rawPortfolioTable;
+            String table = document.select("table[id=PortfolioPositionsTable]").outerHtml();
+
+            return table;
         }
 
         private boolean onLoginSuccess(String htmlString)

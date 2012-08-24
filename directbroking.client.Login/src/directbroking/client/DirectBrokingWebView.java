@@ -32,7 +32,6 @@ public class DirectBrokingWebView extends Activity
             {
                 ProcessHtmlRequests(extras);
             }
-
         }
     }
 
@@ -73,8 +72,26 @@ public class DirectBrokingWebView extends Activity
     {
         String htmlStringRequest = extras.getString("htmlString");
         WebView webview = (WebView)findViewById(R.id.dbWebView);
-//        webview.setBackgroundColor(Color.parseColor(getResources().getString(R.color.grey)));
         webview.setBackgroundColor(Color.parseColor("#e6e6e6"));
-        webview.loadDataWithBaseURL("http://www.directbroking.co.nz/", htmlStringRequest, "text/html", "utf-8", null);
+        webview.loadDataWithBaseURL("https://www.directbroking.co.nz/DirectTrade/dynamic/", htmlStringRequest, "text/html", "utf-8", null);
+//        SQLiteDatabase dbase = new SQLiteDatabase()
     }
 }
+
+//public class DatabaseHelper extends SQLiteOpenHelper
+//{
+//    static final String dbName="DirectBrokingDB";
+//    static final String employeeTable="Portfolio";
+//    @Override
+//    public void onCreate(SQLiteDatabase arg0)
+//    {
+//        // TODO Auto-generated method stub
+//
+//    }
+//    @Override
+//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+//    {
+//        // TODO Auto-generated method stub
+//
+//    }
+//}
