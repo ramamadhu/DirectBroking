@@ -58,6 +58,8 @@ public class Login extends Activity implements OnClickListener
     {
         super.onCreate(savedInstanceState);
         System.out.println("Runnng onCreate");
+        
+        DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
         ImageButton loginButton = (ImageButton) findViewById(R.id.LoginButton);
@@ -196,11 +198,7 @@ public class Login extends Activity implements OnClickListener
             String passwordString = inputs[1];
             String responseBody = "";
 
-            SchemeRegistry schemeRegistry = new SchemeRegistry();
-            schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
-            HttpParams params = new BasicHttpParams();
-            ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
-            HttpClient client = new DefaultHttpClient(mgr, params);
+            HttpClient client = dbHttpClientInstance();
 
             try
             {
@@ -302,4 +300,18 @@ public class Login extends Activity implements OnClickListener
         }
         return true;
     }
+
+    public static HttpClient client;
+	public static HttpClient dbHttpClientInstance() 
+	{
+		if (client == null)
+		{
+		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+		HttpParams params = new BasicHttpParams();
+		ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
+		client = new DefaultHttpClient(mgr, params);
+		}
+		return client;
+	}
 }
