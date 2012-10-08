@@ -25,5 +25,7 @@
     <string name="menu_settings">Settings</string>
     <string name="title_activity_dbtext_view">DBTextView</string>
     <string name="title_activity_table_view">TableView</string>
-
+    <string name="Signout">Sign out</string>
+    <string name="portfoliotab">Portfolio</string>
+    <string name="accountTab">Account</string>
 </resources>

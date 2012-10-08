@@ -1,10 +1,15 @@
 package directbroking.client;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.Window;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -33,6 +38,37 @@ public class DirectBrokingWebView extends Activity
                 ProcessHtmlRequests(extras);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.dbwebviewmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.signout:
+            	String url = "https://www.directbroking.co.nz/DirectTrade/dynamic/signoff.aspx";
+            	HttpClient client = Login.dbHttpClientInstance();
+            	HttpPost httppost = new HttpPost(url);
+            	try
+            	{
+            		client.execute(httppost);
+            	}
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            	finish();
+                break;
+        }
+        return true;
     }
 
     private void ProcessFaqRequests(Bundle extras)
