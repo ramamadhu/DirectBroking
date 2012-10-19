@@ -2,6 +2,10 @@ package directbroking.client;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.xmlpull.v1.XmlPullParser;
 
 import android.app.Activity;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 
 public class DirectBrokingWebView extends Activity
 {
+    private StockDataSource stocksSource;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -104,13 +109,54 @@ public class DirectBrokingWebView extends Activity
         }
     }
 
+    static int position = 0;
+    static String stock;
+    static String stockQuantity;
+
     private void ProcessHtmlRequests(Bundle extras)
     {
-        String htmlStringRequest = extras.getString("htmlString");
+        String htmlData = extras.getString("htmlString");
         WebView webview = (WebView)findViewById(R.id.dbWebView);
         webview.setBackgroundColor(Color.parseColor("#e6e6e6"));
-        webview.loadDataWithBaseURL("https://www.directbroking.co.nz/DirectTrade/dynamic/", htmlStringRequest, "text/html", "utf-8", null);
-//        SQLiteDatabase dbase = new SQLiteDatabase()
+        webview.loadDataWithBaseURL("https://www.directbroking.co.nz/DirectTrade/dynamic/", htmlData, "text/html", "utf-8", null);
+
+        Document document = Jsoup.parse(htmlData);
+//        String table = document.select("tr[class=dgitTR]").outerHtml();
+        Elements rows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(4)");
+//        Elements rows = document.select("table[class=tblResults teamTable] tr:gt(0):lt(13)");
+
+        String s[] = new String[rows.size()];
+        for(Element row : rows)
+        {
+            s[0] = row.child(0).text();
+            s[1] = row.child(1).text();
+            s[2] = row.child(2).text();
+
+            stock = s[0];
+            if (s[1] !="")
+            {
+                stockQuantity = s[1];
+            }
+    //        else played = 0;
+    //        if (s[2] !=""){
+    //        won = Integer.parseInt(s[2]);}
+    //        else won = 0;
+    //        if (s[3] !=""){
+    //        drew = Integer.parseInt(s[3]);}
+    //        else drew = 0;
+    //        if (s[4] !=""){
+    //        points = Integer.parseInt(s[4]);}
+    //        else points = 0;
+
+            position ++;
+
+
+    // sql insert
+//       mDbHelper.createTableRow(position, stock, stockQuantity);
+           stocksSource = new StockDataSource(this);
+           stocksSource.open();
+           stocksSource.createStock(stock, stockQuantity);
+        }
     }
 }
 

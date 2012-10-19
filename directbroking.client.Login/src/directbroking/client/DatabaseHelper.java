@@ -10,35 +10,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	static final String dbName = "DirectBrokingDB";
 	static final String portfolioTable = "Portfolio";
 
-	static final String colTicker = "Stock Code";
+	static final String colTicker = "Code";
 	static final String colQuantity = "Quantity";
-	static final String colCostPrice = "Cost Price";
-	static final String colMarketPrice = "Market Price";
+	static final String colCostPrice = "CostPrice";
+	static final String colMarketPrice = "Price";
 
-	static final String colMarketValue = "Market Value";
-	static final String colUnrealisedPL = "Unrealised P/L";
-	static final String colValueNZD = "Value (NZD)";
-	static final String colUnrealisedPLNZD = "Unrealised P/L NZD";
-	static final String colPercentPortfolio = "% of Portfolio";
+	static final String colMarketValue = "Value";
+	static final String colUnrealisedPL = "UnrealisedPL";
+	static final String colValueNZD = "ValueNZD";
+	static final String colUnrealisedPLNZD = "UnrealisedPLNZD";
+	static final String colPercentPortfolio = "PercentPortfolio";
 
+	private static final String DATABASE_CREATE = "create table "
+	        + portfolioTable
+	        + " ("
+	        + colTicker + " TEXT PRIMARY KEY , "
+	        + colQuantity+ " INTEGER"
+	        + ");";
 	public DatabaseHelper(Context context) {
 		super(context, dbName, null, 33);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE " + portfolioTable + " (" + colTicker
-				+ " TEXT PRIMARY KEY ," + colQuantity + " INTEGER ,"
-				+ colCostPrice + " INTEGER," + colMarketPrice + " INTEGER,"
-				+ colMarketValue + " INTEGER," + colUnrealisedPL + " INTEGER"
-				+ colValueNZD + " INTEGER" + colUnrealisedPLNZD + " INTEGER"
-				+ colPercentPortfolio + "INTEGER)");
+	    db.execSQL(DATABASE_CREATE);
+//		db.execSQL("CREATE TABLE " + portfolioTable + " ("+colTicker+ " TEXT PRIMARY KEY , "+colQuantity+ " INTEGER)");
+//				+ colCostPrice + " INTEGER," + colMarketPrice + " INTEGER,"
+//				+ colMarketValue + " INTEGER," + colUnrealisedPL + " INTEGER"
+//				+ colValueNZD + " INTEGER" + colUnrealisedPLNZD + " INTEGER"
+//				+ colPercentPortfolio + "INTEGER)");
 
 		// TODO: This is test code. Inserts pre-defined departments
-		InsertCodes(db);
+//		InsertCodes(db);
 	}
 
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	@Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
 
 		db.execSQL("DROP TABLE IF EXISTS " + portfolioTable);

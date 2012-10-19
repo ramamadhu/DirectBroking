@@ -11,8 +11,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class StockDataSource {
 	  private SQLiteDatabase database;
-	  private DatabaseHelper dbHelper;
-	  private String[] allColumns = { DatabaseHelper.colTicker, DatabaseHelper.colQuantity };
+	  private final DatabaseHelper dbHelper;
+	  private final String[] allColumns = { DatabaseHelper.colTicker, DatabaseHelper.colQuantity };
 
 	  public StockDataSource(Context context) {
 	    dbHelper = new DatabaseHelper(context);
@@ -26,18 +26,18 @@ public class StockDataSource {
 	    dbHelper.close();
 	  }
 
-	  public Stock createStock(String stockQuantity) {
+//	  public Stock createStock(String ticker, String stockQuantity) {
+	  public void createStock(String ticker, String stockQuantity) {
 	    ContentValues values = new ContentValues();
+	    values.put(DatabaseHelper.colTicker, ticker);
 	    values.put(DatabaseHelper.colQuantity, stockQuantity);
-	    long insertId = database.insert(DatabaseHelper.portfolioTable, null,
-	        values);
-	    Cursor cursor = database.query(DatabaseHelper.portfolioTable,
-	        allColumns, DatabaseHelper.colTicker + " = " + insertId, null,
-	        null, null, null);
-	    cursor.moveToFirst();
-	    Stock newComment = cursorToStock(cursor);
-	    cursor.close();
-	    return newComment;
+	    long insertId = database.insert(DatabaseHelper.portfolioTable, DatabaseHelper.colTicker, values);
+
+	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.colTicker + "=" + insertId, null, null, null, null);
+//	    cursor.moveToFirst();
+//	    Stock newStock = cursorToStock(cursor);
+//	    cursor.close();
+//	    return newStock;
 	  }
 
 	  public void deleteStock(Stock stock) {
