@@ -155,7 +155,10 @@ public class DirectBrokingWebView extends Activity
 //       mDbHelper.createTableRow(position, stock, stockQuantity);
            stocksSource = new StockDataSource(this);
            stocksSource.open();
-           stocksSource.createStock(stock, stockQuantity);
+//           stocksSource.createStock(stock, stockQuantity);
+           Stock newStock = stocksSource.createStock(stock, stockQuantity);
+//           System.out.printf("stock name: %s", newStock.getTicker());
+//           System.out.printf("stock quantity: %s", newStock.getQuantity());
         }
     }
 }

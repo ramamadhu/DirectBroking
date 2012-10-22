@@ -11,6 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	static final String portfolioTable = "Portfolio";
 
 	static final String colTicker = "Code";
+	public static final String COLUMN_ID = "_id";
 	static final String colQuantity = "Quantity";
 	static final String colCostPrice = "CostPrice";
 	static final String colMarketPrice = "Price";
@@ -24,11 +25,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_CREATE = "create table "
 	        + portfolioTable
 	        + " ("
-	        + colTicker + " TEXT PRIMARY KEY , "
-	        + colQuantity+ " INTEGER"
+	        + COLUMN_ID + " integer primary key autoincrement , "
+//	        + colTicker + " TEXT PRIMARY KEY , "
+	        + colTicker + " TEXT , "
+	        + colQuantity + " INTEGER"
 	        + ");";
 	public DatabaseHelper(Context context) {
-		super(context, dbName, null, 33);
+		super(context, dbName, null, 35);
 	}
 
 	@Override
