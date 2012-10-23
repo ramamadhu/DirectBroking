@@ -122,24 +122,29 @@ public class DirectBrokingWebView extends Activity
 
         Document document = Jsoup.parse(htmlData);
 //        String table = document.select("tr[class=dgitTR]").outerHtml();
-        Elements rows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(4)");
+        Elements rows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(13)");
 //        Elements rows = document.select("table[class=tblResults teamTable] tr:gt(0):lt(13)");
 
         String s[] = new String[rows.size()];
         for(Element row : rows)
         {
+//        	if (rows.iterator() == 0) {
+//        		System.out.println("skipping empty row");
+//        		continue;
+//        	}
             s[0] = row.child(0).text();
             s[1] = row.child(1).text();
             s[2] = row.child(2).text();
 
             stock = s[0];
-            if (s[1] !="")
-            {
-                stockQuantity = s[1];
-            }
+//            if (s[1] !="")
+//            {
+//                stockQuantity = s[1];
+//            }
     //        else played = 0;
-    //        if (s[2] !=""){
-    //        won = Integer.parseInt(s[2]);}
+            if (s[2] !=""){
+                stockQuantity = s[2];
+            }
     //        else won = 0;
     //        if (s[3] !=""){
     //        drew = Integer.parseInt(s[3]);}
@@ -155,11 +160,10 @@ public class DirectBrokingWebView extends Activity
 //       mDbHelper.createTableRow(position, stock, stockQuantity);
            stocksSource = new StockDataSource(this);
            stocksSource.open();
-//           stocksSource.createStock(stock, stockQuantity);
            System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
            Stock newStock = stocksSource.createStock(stock, stockQuantity);
-//           System.out.printf("stock name: %s", newStock.getTicker());
-//           System.out.printf("stock quantity: %s", newStock.getQuantity());
+           System.out.printf("RM stock name: %s\n", newStock.getTicker());
+           System.out.printf("RM stock quantity: %s\n", newStock.getQuantity());
         }
     }
 }
