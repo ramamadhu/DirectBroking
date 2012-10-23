@@ -156,6 +156,7 @@ public class DirectBrokingWebView extends Activity
            stocksSource = new StockDataSource(this);
            stocksSource.open();
 //           stocksSource.createStock(stock, stockQuantity);
+           System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
            Stock newStock = stocksSource.createStock(stock, stockQuantity);
 //           System.out.printf("stock name: %s", newStock.getTicker());
 //           System.out.printf("stock quantity: %s", newStock.getQuantity());

@@ -33,7 +33,7 @@ public class StockDataSource {
 	    values.put(DatabaseHelper.colQuantity, stockQuantity);
 //	    long insertId = database.insert(DatabaseHelper.portfolioTable, DatabaseHelper.colTicker, values);
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
-
+	    System.out.printf("InsertId for ticker code %s quantity %s, is %f\n", ticker, stockQuantity, (float)insertId);
 //	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.colTicker + "=" + insertId, null, null, null, null);
 	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
 	    cursor.moveToFirst();
