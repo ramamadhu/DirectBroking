@@ -122,37 +122,26 @@ public class DirectBrokingWebView extends Activity
 
         Document document = Jsoup.parse(htmlData);
 //        String table = document.select("tr[class=dgitTR]").outerHtml();
-        Elements rows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(13)");
-//        Elements rows = document.select("table[class=tblResults teamTable] tr:gt(0):lt(13)");
+        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(18)");
 
-        String s[] = new String[rows.size()];
-        for(Element row : rows)
+        String s[] = new String[tableRows.size()];
+        for(Element row : tableRows)
         {
-//        	if (rows.iterator() == 0) {
-//        		System.out.println("skipping empty row");
-//        		continue;
-//        	}
             s[0] = row.child(0).text();
             s[1] = row.child(1).text();
             s[2] = row.child(2).text();
 
             stock = s[0];
-//            if (s[1] !="")
-//            {
-//                stockQuantity = s[1];
-//            }
-    //        else played = 0;
+            System.out.printf("Stock is %s\n", stock);
+            if (stock == "Code")
+            {
+                System.out.println("skipping title row");
+                continue;
+            }
+
             if (s[2] !=""){
                 stockQuantity = s[2];
             }
-    //        else won = 0;
-    //        if (s[3] !=""){
-    //        drew = Integer.parseInt(s[3]);}
-    //        else drew = 0;
-    //        if (s[4] !=""){
-    //        points = Integer.parseInt(s[4]);}
-    //        else points = 0;
-
             position ++;
 
 

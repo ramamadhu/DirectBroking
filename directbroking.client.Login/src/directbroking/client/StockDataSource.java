@@ -75,8 +75,8 @@ public class StockDataSource {
 
 	  private Stock cursorToStock(Cursor cursor) {
 	    Stock stock = new Stock();
-	    stock.setTicker(cursor.getString(0));
-	    stock.setQuantity(cursor.getString(1));
+	    stock.setTicker(cursor.getString(1));
+	    stock.setQuantity(cursor.getString(2));
 	    return stock;
 	  }
 }
