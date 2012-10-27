@@ -57,20 +57,20 @@ public class StockDataSource {
 	  }
 
 	  public List<Stock> getStockData() {
-	    List<Stock> comments = new ArrayList<Stock>();
+	    List<Stock> stockList = new ArrayList<Stock>();
 
 	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, null, null, null, null, null);
 
 //	    cursor.moveToFirst();
 	    cursor.moveToNext();
 	    while (!cursor.isAfterLast()) {
-	      Stock comment = cursorToStock(cursor);
-	      comments.add(comment);
+	      Stock stock = cursorToStock(cursor);
+	      stockList.add(stock);
 	      cursor.moveToNext();
 	    }
 	    // Make sure to close the cursor
 	    cursor.close();
-	    return comments;
+	    return stockList;
 	  }
 
 	  private Stock cursorToStock(Cursor cursor) {

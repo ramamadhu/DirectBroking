@@ -109,7 +109,6 @@ public class DirectBrokingWebView extends Activity
         }
     }
 
-    static int position = 0;
     static String stock;
     static String stockQuantity;
 
@@ -120,7 +119,14 @@ public class DirectBrokingWebView extends Activity
         webview.setBackgroundColor(Color.parseColor("#e6e6e6"));
         webview.loadDataWithBaseURL("https://www.directbroking.co.nz/DirectTrade/dynamic/", htmlData, "text/html", "utf-8", null);
 
-        Document document = Jsoup.parse(htmlData);
+        processPortfolio(htmlData);
+    }
+
+	/**
+	 * @param htmlData
+	 */
+	private void processPortfolio(String htmlData) {
+		Document document = Jsoup.parse(htmlData);
 //        String table = document.select("tr[class=dgitTR]").outerHtml();
         Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(18)");
 
@@ -133,7 +139,7 @@ public class DirectBrokingWebView extends Activity
 
             stock = s[0];
             System.out.printf("Stock is %s\n", stock);
-            if (stock == "Code")
+            if (stock.contentEquals("Code"))
             {
                 System.out.println("skipping title row");
                 continue;
@@ -142,11 +148,8 @@ public class DirectBrokingWebView extends Activity
             if (s[2] !=""){
                 stockQuantity = s[2];
             }
-            position ++;
 
-
-    // sql insert
-//       mDbHelper.createTableRow(position, stock, stockQuantity);
+            // sql insert
            stocksSource = new StockDataSource(this);
            stocksSource.open();
            System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
@@ -154,23 +157,5 @@ public class DirectBrokingWebView extends Activity
            System.out.printf("RM stock name: %s\n", newStock.getTicker());
            System.out.printf("RM stock quantity: %s\n", newStock.getQuantity());
         }
-    }
+	}
 }
-
-//public class DatabaseHelper extends SQLiteOpenHelper
-//{
-//    static final String dbName="DirectBrokingDB";
-//    static final String employeeTable="Portfolio";
-//    @Override
-//    public void onCreate(SQLiteDatabase arg0)
-//    {
-//        // TODO Auto-generated method stub
-//
-//    }
-//    @Override
-//    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
-//    {
-//        // TODO Auto-generated method stub
-//
-//    }
-//}

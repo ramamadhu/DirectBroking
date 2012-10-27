@@ -21,6 +21,10 @@
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity
+            android:name=".DBTextView"
+            android:alwaysRetainTaskState="false"
+            android:clearTaskOnLaunch="true" />        
+        <activity
             android:name="AboutUs"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
