@@ -7,13 +7,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-public class DBTextView extends Activity {
+public class DBListtView extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -68,19 +67,23 @@ public class DBTextView extends Activity {
             }
 
             // sql insert
-           stocksSource = new StockDataSource(this);
-           stocksSource.open();
+//           stocksSource = new StockDataSource(this);
+//           stocksSource.open();
            System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
            Stock newStock = stocksSource.createStock(stock, stockQuantity);
            System.out.printf("RM stock name: %s\n", newStock.getTicker());
            System.out.printf("RM stock quantity: %s\n", newStock.getQuantity());
-
-           List<Stock> values = stocksSource.getStockData();
-           ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(this, android.R.layout.simple_list_item_1, values);
-//           setListAdapter(adapter);
-           ListView myList=(ListView)findViewById(android.R.id.list);
-           myList.setAdapter(adapter);
         }
+
+        stocksSource = new StockDataSource(this);
+        stocksSource.open();
+
+        List<Stock> values = stocksSource.getStockData();
+        ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(this, android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
+//        ListView myList=(ListView)findViewById(android.R.id.list);
+//        myList.setAdapter(adapter);
+        stocksSource.close();
     }
 
 //    @Override

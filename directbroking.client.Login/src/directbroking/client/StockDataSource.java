@@ -66,6 +66,7 @@ public class StockDataSource {
 	    while (!cursor.isAfterLast()) {
 	      Stock stock = cursorToStock(cursor);
 	      stockList.add(stock);
+	      System.out.printf("getStockData: Ticker %s Qty %s\n", stock.getTicker(), stock.getQuantity());
 	      cursor.moveToNext();
 	    }
 	    // Make sure to close the cursor
