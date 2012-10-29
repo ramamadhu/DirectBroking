@@ -25,19 +25,17 @@ public class StockDataSource {
 	  public void close() {
 	    dbHelper.close();
 	  }
-
+	  
 	  public Stock createStock(String ticker, String stockQuantity) {
-//	  public void createStock(String ticker, String stockQuantity) {
 	    ContentValues values = new ContentValues();
 	    values.put(DatabaseHelper.colTicker, ticker);
 	    values.put(DatabaseHelper.colQuantity, stockQuantity);
-//	    long insertId = database.insert(DatabaseHelper.portfolioTable, DatabaseHelper.colTicker, values);
+
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
 	    System.out.printf("InsertId for ticker code %s quantity %s, is %f\n", ticker, stockQuantity, (float)insertId);
-//	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.colTicker + "=" + insertId, null, null, null, null);
+
 	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
 	    cursor.moveToFirst();
-//	    cursor.moveToNext();
 	    Stock newStock = null;
 	    if(cursor.moveToFirst()) {
 	        newStock = cursorToStock(cursor);
@@ -52,7 +50,6 @@ public class StockDataSource {
 	  public void deleteStock(Stock stock) {
 	    String ticker = stock.getTicker();
 	    System.out.println("Stock deleted with id: " + ticker);
-//	    database.delete(DatabaseHelper.portfolioTable, DatabaseHelper.colTicker + " = " + ticker, null);
 	    database.delete(DatabaseHelper.portfolioTable, DatabaseHelper.COLUMN_ID + " = " + ticker, null);
 	  }
 
@@ -60,9 +57,7 @@ public class StockDataSource {
 	    List<Stock> stockList = new ArrayList<Stock>();
 
 	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, null, null, null, null, null);
-
-//	    cursor.moveToFirst();
-	    cursor.moveToNext();
+	    cursor.moveToFirst();
 	    while (!cursor.isAfterLast()) {
 	      Stock stock = cursorToStock(cursor);
 	      stockList.add(stock);

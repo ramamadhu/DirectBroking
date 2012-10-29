@@ -70,4 +70,10 @@ public class Stock
 	public Stock()
 	{
 	}
+
+	// Will be used by the ArrayAdapter in the ListView
+	@Override
+	public String toString() {
+		return ticker;
+	}
 }

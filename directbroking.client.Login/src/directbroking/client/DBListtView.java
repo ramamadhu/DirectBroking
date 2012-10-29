@@ -10,7 +10,6 @@ import org.jsoup.select.Elements;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 public class DBListtView extends ListActivity {
 
@@ -25,11 +24,6 @@ public class DBListtView extends ListActivity {
         {
             if (extras.getString("htmlString") != null)
             {
-//                TextView textView = (TextView) findViewById(R.id.textView1);
-//                String htmlStringRequest = extras.getString("htmlString");
-//                CharSequence htmlStringRequest = extras.getCharSequence("htmlString");
-//                textView.setText(htmlStringRequest);
-                
                 String htmlData = extras.getString("htmlString");
                 processPortfolio(htmlData);
             }
@@ -44,7 +38,6 @@ public class DBListtView extends ListActivity {
      */
     private void processPortfolio(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
-//        String table = document.select("tr[class=dgitTR]").outerHtml();
         Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(18)");
 
         String s[] = new String[tableRows.size()];
@@ -67,24 +60,39 @@ public class DBListtView extends ListActivity {
             }
 
             // sql insert
-//           stocksSource = new StockDataSource(this);
-//           stocksSource.open();
-           System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
            Stock newStock = stocksSource.createStock(stock, stockQuantity);
-           System.out.printf("RM stock name: %s\n", newStock.getTicker());
-           System.out.printf("RM stock quantity: %s\n", newStock.getQuantity());
         }
 
         stocksSource = new StockDataSource(this);
         stocksSource.open();
 
         List<Stock> values = stocksSource.getStockData();
+        stocksSource.close();
         ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(this, android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
-//        ListView myList=(ListView)findViewById(android.R.id.list);
-//        myList.setAdapter(adapter);
-        stocksSource.close();
     }
+    
+    @Override
+    protected void onResume() {
+    stocksSource.open();
+      super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+    stocksSource.close();
+      super.onPause();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (stocksSource != null) {
+        	stocksSource.close();
+        }
+    }
+
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu)
