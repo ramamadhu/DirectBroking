@@ -11,7 +11,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
-public class DBListtView extends ListActivity {
+public class DBListView extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -40,6 +40,9 @@ public class DBListtView extends ListActivity {
     	Document document = Jsoup.parse(htmlData);
         Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(18)");
 
+        stocksSource = new StockDataSource(this);
+        stocksSource.open();
+        
         String s[] = new String[tableRows.size()];
         for(Element row : tableRows)
         {
@@ -60,11 +63,9 @@ public class DBListtView extends ListActivity {
             }
 
             // sql insert
+           @SuppressWarnings("unused")
            Stock newStock = stocksSource.createStock(stock, stockQuantity);
         }
-
-        stocksSource = new StockDataSource(this);
-        stocksSource.open();
 
         List<Stock> values = stocksSource.getStockData();
         stocksSource.close();

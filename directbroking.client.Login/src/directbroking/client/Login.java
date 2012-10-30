@@ -230,7 +230,7 @@ public class Login extends Activity implements OnClickListener
             if(onLoginSuccess(result))
             {
 //                Intent myPortfolio = new Intent(AppContext, DirectBrokingWebView.class);
-                Intent myPortfolio = new Intent(AppContext, DBTextView.class);
+                Intent myPortfolio = new Intent(AppContext, DBListView.class);
                 myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 myPortfolio.putExtra("htmlString", fetchPortolioData(result));
                 AppContext.startActivity(myPortfolio);
