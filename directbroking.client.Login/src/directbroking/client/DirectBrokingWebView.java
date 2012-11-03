@@ -111,6 +111,8 @@ public class DirectBrokingWebView extends Activity
 
     static String stock;
     static String stockQuantity;
+    static String costPrice;
+    static String marketPrice;
 
     private void ProcessHtmlRequests(Bundle extras)
     {
@@ -149,11 +151,19 @@ public class DirectBrokingWebView extends Activity
                 stockQuantity = s[2];
             }
 
+            if (s[3] !=""){
+            	costPrice = s[3];
+            }
+
+            if (s[5] !=""){
+            	marketPrice = s[5];
+            }
+            
             // sql insert
            stocksSource = new StockDataSource(this);
            stocksSource.open();
            System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
-           Stock newStock = stocksSource.createStock(stock, stockQuantity);
+           Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice);
            System.out.printf("RM stock name: %s\n", newStock.getTicker());
            System.out.printf("RM stock quantity: %s\n", newStock.getQuantity());
         }

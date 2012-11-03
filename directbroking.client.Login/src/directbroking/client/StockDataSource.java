@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class StockDataSource {
 	  private SQLiteDatabase database;
 	  private final DatabaseHelper dbHelper;
-	  private final String[] allColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity };
+	  private final String[] allColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity, DatabaseHelper.colCostPrice, DatabaseHelper.colMarketPrice };
 
 	  public StockDataSource(Context context) {
 	    dbHelper = new DatabaseHelper(context);
@@ -26,10 +26,12 @@ public class StockDataSource {
 	    dbHelper.close();
 	  }
 	  
-	  public Stock createStock(String ticker, String stockQuantity) {
+	  public Stock createStock(String ticker, String stockQuantity, String costPrice, String marketPrice) {
 	    ContentValues values = new ContentValues();
 	    values.put(DatabaseHelper.colTicker, ticker);
 	    values.put(DatabaseHelper.colQuantity, stockQuantity);
+	    values.put(DatabaseHelper.colCostPrice, costPrice);
+	    values.put(DatabaseHelper.colMarketPrice, marketPrice);
 
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
 	    System.out.printf("InsertId for ticker code %s quantity %s, is %f\n", ticker, stockQuantity, (float)insertId);
@@ -73,6 +75,8 @@ public class StockDataSource {
 	    Stock stock = new Stock();
 	    stock.setTicker(cursor.getString(1));
 	    stock.setQuantity(cursor.getString(2));
+	    stock.setCostPrice(cursor.getString(3));
+	    stock.setMarketPrice(cursor.getString(4));
 	    return stock;
 	  }
 }

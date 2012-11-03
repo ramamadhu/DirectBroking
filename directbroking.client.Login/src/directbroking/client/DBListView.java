@@ -9,10 +9,12 @@ import org.jsoup.select.Elements;
 
 import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.ListView;
 
 public class DBListView extends ListActivity {
 
+	private ListView listView1;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -33,6 +35,8 @@ public class DBListView extends ListActivity {
     private StockDataSource stocksSource;
     static String stock;
     static String stockQuantity;
+    static String costPrice;
+    static String marketPrice;
     /**
      * @param htmlData
      */
@@ -61,16 +65,31 @@ public class DBListView extends ListActivity {
             if (s[2] !=""){
                 stockQuantity = s[2];
             }
+            
+            if (s[3] !=""){
+            	costPrice = s[3];
+            }
+
+            if (s[5] !=""){
+            	marketPrice = s[5];
+            }
 
             // sql insert
            @SuppressWarnings("unused")
-           Stock newStock = stocksSource.createStock(stock, stockQuantity);
+           Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice);
         }
 
         List<Stock> values = stocksSource.getStockData();
         stocksSource.close();
-        ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(this, android.R.layout.simple_list_item_1, values);
-        setListAdapter(adapter);
+//        ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(this, android.R.layout.simple_list_item_1, values);
+//        setListAdapter(adapter);
+        StockAdapter adapter = new StockAdapter(this, R.layout.listview_item_row, values);
+        listView1 = (ListView)findViewById(android.R.id.list);
+         
+        View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
+        listView1.addHeaderView(header);
+        listView1.setAdapter(adapter);
+
     }
     
     @Override

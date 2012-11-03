@@ -28,10 +28,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	        + COLUMN_ID + " integer primary key autoincrement , "
 //	        + colTicker + " TEXT PRIMARY KEY , "
 	        + colTicker + " TEXT , "
-	        + colQuantity + " INTEGER"
+	        + colQuantity + " INTEGER , "
+	        + colCostPrice + " INTEGER , "
+	        + colMarketPrice + " INTEGER"
 	        + ");";
 	public DatabaseHelper(Context context) {
-		super(context, dbName, null, 35);
+		super(context, dbName, null, 37);
 	}
 
 	@Override
