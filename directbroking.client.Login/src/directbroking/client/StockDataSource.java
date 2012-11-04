@@ -34,7 +34,7 @@ public class StockDataSource {
 	    values.put(DatabaseHelper.colMarketPrice, marketPrice);
 
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
-	    System.out.printf("InsertId for ticker code %s quantity %s, is %f\n", ticker, stockQuantity, (float)insertId);
+	    System.out.printf("InsertId for ticker code %s quantity %s costPrice %s, is %f\n", ticker, stockQuantity, costPrice, (float)insertId);
 
 	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
 	    cursor.moveToFirst();
@@ -63,7 +63,7 @@ public class StockDataSource {
 	    while (!cursor.isAfterLast()) {
 	      Stock stock = cursorToStock(cursor);
 	      stockList.add(stock);
-	      System.out.printf("getStockData: Ticker %s Qty %s\n", stock.getTicker(), stock.getQuantity());
+	      System.out.printf("getStockData: Ticker %s Qty %s costPrice %s\n", stock.getTicker(), stock.getQuantity(), stock.getCostPrice());
 	      cursor.moveToNext();
 	    }
 	    // Make sure to close the cursor

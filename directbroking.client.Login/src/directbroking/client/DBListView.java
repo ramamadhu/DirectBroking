@@ -53,9 +53,12 @@ public class DBListView extends ListActivity {
             s[0] = row.child(0).text();
             s[1] = row.child(1).text();
             s[2] = row.child(2).text();
+            s[3] = row.child(3).text();
+            s[4] = row.child(4).text();
+            s[5] = row.child(5).text();
 
             stock = s[0];
-            System.out.printf("Stock is %s\n", stock);
+            System.out.printf("Parser Stock is %s\n", stock);
             if (stock.contentEquals("Code"))
             {
                 System.out.println("skipping title row");
@@ -64,19 +67,23 @@ public class DBListView extends ListActivity {
 
             if (s[2] !=""){
                 stockQuantity = s[2];
+                System.out.printf("Parser Quantity %s\n", stockQuantity);
             }
             
             if (s[3] !=""){
             	costPrice = s[3];
+            	System.out.printf("Parser costPrice %s\n", costPrice);
             }
 
             if (s[5] !=""){
             	marketPrice = s[5];
+            	System.out.printf("Parser marketPrice %s\n", marketPrice);
             }
 
             // sql insert
            @SuppressWarnings("unused")
            Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice);
+           System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
         }
 
         List<Stock> values = stocksSource.getStockData();

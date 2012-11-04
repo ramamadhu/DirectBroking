@@ -14,13 +14,13 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 
 	Context context;
 	int layoutResourceId;
-	List<Stock> data = null;
+	List<Stock> stockList = null;
 
 	public StockAdapter(Context context, int textViewResourceId, List<Stock> objects) {
 		super(context, textViewResourceId, objects);
         this.layoutResourceId = textViewResourceId;
         this.context = context;
-        this.data = objects;
+        this.stockList = objects;
 	}
 
 	@Override
@@ -43,9 +43,11 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 			holder = (StockHolder) row.getTag();
 		}
 
-		Stock stock = data.get(position);
-		System.out.printf("Stock code: %s\n", stock.getTicker());
-		System.out.printf("Stock quantity: %s\n", stock.getCostPrice());
+		Stock stock = stockList.get(position);
+		System.out.printf("StockAdapter code: %s\n", stock.getTicker());
+		System.out.printf("StockAdapter quantity: %s\n", stock.getQuantity());
+		System.out.printf("StockAdapter purchasePrice: %s\n", stock.getCostPrice());
+		System.out.printf("StockAdapter getMarketPrice: %s\n", stock.getMarketPrice());
 		holder.ticker.setText(stock.getTicker());
 		holder.purchasePrice.setText(stock.getCostPrice());
 		holder.marketPrice.setText(stock.getMarketPrice());
