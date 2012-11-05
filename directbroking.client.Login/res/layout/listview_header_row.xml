@@ -1,20 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"> 
-        
-     <TextView
-         android:id="@+id/txtHeader"
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:background="@color/red"
-         android:gravity="center_horizontal"
-         android:padding="10dp"
-         android:text="@string/portfolio"
-         android:textColor="#FFFFFF"
-         android:textSize="22dp"
-         android:textStyle="bold" />
+    android:layout_height="fill_parent"
+    android:background="@color/grey" >
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/red"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="@string/portfolio"
+        android:textColor="#FFFFFF"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtStock"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtHeader"
+        android:layout_marginTop="0dp"
+        android:background="@color/red"
+        android:gravity="center"
+        android:text="@string/stock"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textCostPrice"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtStock"
+        android:layout_below="@+id/txtHeader"
+        android:layout_toRightOf="@+id/txtStock"
+        android:background="@color/red"
+        android:gravity="center"
+        android:text="@string/costPrice"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textMarketPrice"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtHeader"
+        android:layout_toRightOf="@+id/textCostPrice"
+        android:background="@color/red"
+        android:text="@string/marketPrice"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp" />
+    
+</RelativeLayout>

@@ -81,7 +81,6 @@ public class DBListView extends ListActivity {
             }
 
             // sql insert
-           @SuppressWarnings("unused")
            Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice);
            System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
         }

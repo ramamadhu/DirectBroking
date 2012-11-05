@@ -31,4 +31,7 @@
     <string name="hello">TODO</string>
     <string name="portfolio">Portfolio</string>
     <string name="main_no_items">TODO</string>
+    <string name="stock">Stock</string>
+    <string name="costPrice">Cost</string>
+    <string name="marketPrice">Market</string>
 </resources>
