@@ -31,7 +31,7 @@
         android:text="@string/stock"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/textCostPrice"
@@ -45,7 +45,7 @@
         android:text="@string/costPrice"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/textMarketPrice"
@@ -57,6 +57,21 @@
         android:text="@string/marketPrice"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/textMarketValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textMarketPrice"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textMarketPrice"
+        android:layout_toRightOf="@+id/textMarketPrice"
+        android:background="@color/red"
+        android:gravity="center"
+        android:text="@string/marketvalue"
+        android:textColor="#FFFFFF"
+        android:textSize="15dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
     
 </RelativeLayout>

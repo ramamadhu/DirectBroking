@@ -1,8 +1,6 @@
 package directbroking.client;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -30,23 +28,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	        + colTicker + " TEXT , "
 	        + colQuantity + " INTEGER , "
 	        + colCostPrice + " INTEGER , "
-	        + colMarketPrice + " INTEGER"
+	        + colMarketPrice + " INTEGER , "
+	        + colMarketValue + " INTEGER"
 	        + ");";
 	public DatabaseHelper(Context context) {
-		super(context, dbName, null, 37);
+		super(context, dbName, null, 39);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 	    db.execSQL(DATABASE_CREATE);
-//		db.execSQL("CREATE TABLE " + portfolioTable + " ("+colTicker+ " TEXT PRIMARY KEY , "+colQuantity+ " INTEGER)");
-//				+ colCostPrice + " INTEGER," + colMarketPrice + " INTEGER,"
-//				+ colMarketValue + " INTEGER," + colUnrealisedPL + " INTEGER"
-//				+ colValueNZD + " INTEGER" + colUnrealisedPLNZD + " INTEGER"
-//				+ colPercentPortfolio + "INTEGER)");
-
-		// TODO: This is test code. Inserts pre-defined departments
-//		InsertCodes(db);
 	}
 
 	@Override
@@ -56,23 +47,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + portfolioTable);
 		onCreate(db);
 	}
-
-	// TODO: This is test code
-	void InsertCodes(SQLiteDatabase db) {
-		ContentValues cv = new ContentValues();
-		cv.put(colTicker, "MHI");
-		cv.put(colQuantity, 4230);
-		db.insert(portfolioTable, colTicker, cv);
-	}
-
-	public String GetTickerQuantity(String ticker) {
-		SQLiteDatabase db = this.getReadableDatabase();
-
-		String[] params = new String[] { String.valueOf(ticker) };
-		Cursor c = db.rawQuery("SELECT " + colQuantity + " FROM"
-				+ portfolioTable + " WHERE " + colTicker + "=?", params);
-		c.moveToFirst();
-		int index = c.getColumnIndex(colQuantity);
-		return c.getString(index);
+	
+	public void deleteAllEntries(SQLiteDatabase db){
+		db.delete(portfolioTable, null, null);
 	}
 }

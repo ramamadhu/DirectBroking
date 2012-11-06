@@ -34,4 +34,5 @@
     <string name="stock">Stock</string>
     <string name="costPrice">Cost</string>
     <string name="marketPrice">Market</string>
+    <string name="marketvalue">Value</string>
 </resources>

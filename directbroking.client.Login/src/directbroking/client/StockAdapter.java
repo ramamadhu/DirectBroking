@@ -36,6 +36,7 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 			holder.ticker = (TextView) row.findViewById(R.id.txtTitle);
 			holder.purchasePrice = (TextView) row.findViewById(R.id.txtTitle2);
 			holder.marketPrice = (TextView) row.findViewById(R.id.txtTitle3);
+			holder.marketValue = (TextView) row.findViewById(R.id.txtTitle4);
 
 			row.setTag(holder);
 		} 
@@ -48,9 +49,11 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		System.out.printf("StockAdapter quantity: %s\n", stock.getQuantity());
 		System.out.printf("StockAdapter purchasePrice: %s\n", stock.getCostPrice());
 		System.out.printf("StockAdapter getMarketPrice: %s\n", stock.getMarketPrice());
+		System.out.printf("StockAdapter getMarketValue: %s\n", stock.getMarketValue());
 		holder.ticker.setText(stock.getTicker());
 		holder.purchasePrice.setText(stock.getCostPrice());
 		holder.marketPrice.setText(stock.getMarketPrice());
+		holder.marketValue.setText(stock.getMarketValue());
 
 		return row;
 	}
@@ -59,5 +62,6 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		TextView purchasePrice;
 		TextView ticker;
 		TextView marketPrice;
+		TextView marketValue;
 	}
 }

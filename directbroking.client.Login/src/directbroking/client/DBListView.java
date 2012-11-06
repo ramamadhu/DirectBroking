@@ -37,6 +37,7 @@ public class DBListView extends ListActivity {
     static String stockQuantity;
     static String costPrice;
     static String marketPrice;
+    static String marketValue;
     /**
      * @param htmlData
      */
@@ -56,6 +57,7 @@ public class DBListView extends ListActivity {
             s[3] = row.child(3).text();
             s[4] = row.child(4).text();
             s[5] = row.child(5).text();
+            s[6] = row.child(6).text();
 
             stock = s[0];
             System.out.printf("Parser Stock is %s\n", stock);
@@ -80,8 +82,12 @@ public class DBListView extends ListActivity {
             	System.out.printf("Parser marketPrice %s\n", marketPrice);
             }
 
+            if (s[6] !=""){
+            	marketValue = s[6];
+            	System.out.printf("Parser marketValue %s\n", marketValue);
+            }
             // sql insert
-           Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice);
+           Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue);
            System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
         }
 

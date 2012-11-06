@@ -12,7 +12,8 @@ import android.database.sqlite.SQLiteDatabase;
 public class StockDataSource {
 	  private SQLiteDatabase database;
 	  private final DatabaseHelper dbHelper;
-	  private final String[] allColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity, DatabaseHelper.colCostPrice, DatabaseHelper.colMarketPrice };
+	  private final String[] allColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity,
+			  													DatabaseHelper.colCostPrice, DatabaseHelper.colMarketPrice, DatabaseHelper.colMarketValue };
 
 	  public StockDataSource(Context context) {
 	    dbHelper = new DatabaseHelper(context);
@@ -20,18 +21,20 @@ public class StockDataSource {
 
 	  public void open() throws SQLException {
 	    database = dbHelper.getWritableDatabase();
+	    dbHelper.deleteAllEntries(database);
 	  }
 
 	  public void close() {
 	    dbHelper.close();
 	  }
 	  
-	  public Stock createStock(String ticker, String stockQuantity, String costPrice, String marketPrice) {
+	  public Stock createStock(String ticker, String stockQuantity, String costPrice, String marketPrice, String marketValue) {
 	    ContentValues values = new ContentValues();
 	    values.put(DatabaseHelper.colTicker, ticker);
 	    values.put(DatabaseHelper.colQuantity, stockQuantity);
 	    values.put(DatabaseHelper.colCostPrice, costPrice);
 	    values.put(DatabaseHelper.colMarketPrice, marketPrice);
+	    values.put(DatabaseHelper.colMarketValue, marketValue);
 
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
 	    System.out.printf("InsertId for ticker code %s quantity %s costPrice %s, is %f\n", ticker, stockQuantity, costPrice, (float)insertId);
@@ -77,6 +80,7 @@ public class StockDataSource {
 	    stock.setQuantity(cursor.getString(2));
 	    stock.setCostPrice(cursor.getString(3));
 	    stock.setMarketPrice(cursor.getString(4));
+	    stock.setMarketPrice(cursor.getString(5));
 	    return stock;
 	  }
 }
