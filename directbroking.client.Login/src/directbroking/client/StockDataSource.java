@@ -80,7 +80,7 @@ public class StockDataSource {
 	    stock.setQuantity(cursor.getString(2));
 	    stock.setCostPrice(cursor.getString(3));
 	    stock.setMarketPrice(cursor.getString(4));
-	    stock.setMarketPrice(cursor.getString(5));
+	    stock.setMarketValue(cursor.getString(5));
 	    return stock;
 	  }
 }

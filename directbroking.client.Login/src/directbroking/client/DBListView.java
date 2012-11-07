@@ -43,7 +43,7 @@ public class DBListView extends ListActivity {
      */
     private void processPortfolio(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
-        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(18)");
+        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(20)");
 
         stocksSource = new StockDataSource(this);
         stocksSource.open();
