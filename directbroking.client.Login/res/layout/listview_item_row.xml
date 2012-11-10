@@ -10,14 +10,14 @@
     
      <TextView
          android:id="@+id/txtTitle"
-         android:layout_width="100dp"
+         android:layout_width="76dp"
          android:layout_height="match_parent"
          android:layout_marginBottom="5dp"
          android:layout_marginTop="5dp"
+         android:cacheColorHint="@android:color/transparent"
          android:gravity="center_vertical"
          android:textColor="#000000"
          android:textSize="13dp"
-         android:cacheColorHint="@android:color/transparent"
          android:textStyle="bold" />
 
         <TextView
@@ -46,13 +46,14 @@
 
         <TextView
             android:id="@+id/txtTitle4"
-            android:layout_width="69dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:cacheColorHint="@android:color/transparent"
             android:gravity="center_vertical"
             android:textColor="#000000"
             android:textSize="13dp"
-            android:cacheColorHint="@android:color/transparent"
             android:textStyle="bold" />
+
 </LinearLayout>

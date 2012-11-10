@@ -38,54 +38,62 @@ public class DBListView extends ListActivity {
     static String costPrice;
     static String marketPrice;
     static String marketValue;
+    static String nzdMarketValue;
     /**
      * @param htmlData
      */
     private void processPortfolio(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
-        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(20)");
+        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(21)");
 
+        tableRows.remove(0);
         stocksSource = new StockDataSource(this);
         stocksSource.open();
-        
-        String s[] = new String[tableRows.size()];
+        System.out.println("DEBUG: " + tableRows.size());
+
         for(Element row : tableRows)
         {
-            s[0] = row.child(0).text();
-            s[1] = row.child(1).text();
-            s[2] = row.child(2).text();
-            s[3] = row.child(3).text();
-            s[4] = row.child(4).text();
-            s[5] = row.child(5).text();
-            s[6] = row.child(6).text();
+        	Elements tds = row.getElementsByTag("td");
+            Element td = tds.first();
+            System.out.println("DEBUG: " + td.text());
+            System.out.println("DEBUG: " + tds.size());
+            System.out.println("DEBUG: " + tds.get(2).text());
 
-            stock = s[0];
+            stock = tds.first().text().replaceAll("\u00a0","").trim();
             System.out.printf("Parser Stock is %s\n", stock);
-            if (stock.contentEquals("Code"))
-            {
+            if (stock.contentEquals("Code")) {
                 System.out.println("skipping title row");
                 continue;
             }
 
-            if (s[2] !=""){
-                stockQuantity = s[2];
-                System.out.printf("Parser Quantity %s\n", stockQuantity);
+            if (stock.contentEquals("NZD Subtotal") || stock.contains("AUD Subtotal")) {
+                System.out.println("NZD Subtotal");
+                
+                nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
+                marketValue = tds.get(4).text().replaceAll("\u00a0","").trim();
+                costPrice = stockQuantity = "";
+                
+                Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue);
+                System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
+
+                continue;
             }
             
-            if (s[3] !=""){
-            	costPrice = s[3];
-            	System.out.printf("Parser costPrice %s\n", costPrice);
-            }
+            if (stock.contentEquals("Total")) {
+                nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
+                marketValue = tds.get(4).text().replaceAll("\u00a0","").trim();
+                costPrice = stockQuantity = "";
+                
+                Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue);
+                System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
 
-            if (s[5] !=""){
-            	marketPrice = s[5];
-            	System.out.printf("Parser marketPrice %s\n", marketPrice);
+                continue;
             }
-
-            if (s[6] !=""){
-            	marketValue = s[6];
-            	System.out.printf("Parser marketValue %s\n", marketValue);
-            }
+            
+            stockQuantity = tds.get(2).text().replaceAll("\u00a0","").trim();
+            costPrice = tds.get(3).text().replaceAll("\u00a0","").trim();
+            marketPrice = tds.get(5).text().replaceAll("\u00a0","").trim();
+            marketValue = tds.get(6).text().replaceAll("\u00a0","").trim();
             // sql insert
            Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue);
            System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
@@ -93,8 +101,6 @@ public class DBListView extends ListActivity {
 
         List<Stock> values = stocksSource.getStockData();
         stocksSource.close();
-//        ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(this, android.R.layout.simple_list_item_1, values);
-//        setListAdapter(adapter);
         StockAdapter adapter = new StockAdapter(this, R.layout.listview_item_row, values);
         listView1 = (ListView)findViewById(android.R.id.list);
          

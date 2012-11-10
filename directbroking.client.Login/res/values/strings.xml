@@ -19,6 +19,7 @@
 
     <color name="grey">#ffe6e6e6</color>
     <color name="red">#cf142b</color>
+    <color name="black">#ff0000</color>
 
     <string name="textview">TextView</string>
     <string name="hello_world">Hello world!</string>
@@ -29,7 +30,7 @@
     <string name="portfoliotab">Portfolio</string>
     <string name="accountTab">Account</string>
     <string name="hello">TODO</string>
-    <string name="portfolio">Portfolio</string>
+    <string name="portfolio"> My Portfolio</string>
     <string name="main_no_items">TODO</string>
     <string name="stock">Stock</string>
     <string name="costPrice">Cost</string>
