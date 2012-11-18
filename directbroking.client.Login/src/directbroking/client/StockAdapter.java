@@ -60,19 +60,38 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		holder.marketValue.setText(stock.getMarketValue());
 		holder.marketValue.setGravity(Gravity.CENTER);
 		System.out.printf("%s\n", stock.getCostPrice());
-		try {
-			float costPrice = Float.parseFloat(stock.getCostPrice());
-			float marketPrice = Float.parseFloat(stock.getMarketPrice());
-			System.out.printf("%f %f, %f\n", costPrice, marketPrice, (costPrice - marketPrice));
-//			if (stock.getTicker().equalsIgnoreCase("NZD Subtotal"))
-				
-			if ((costPrice - marketPrice) > 0)
+		if (stock.getTicker().contains("NZD Subtotal") || 
+			stock.getTicker().contains("AUD Subtotal") ||
+			stock.getTicker().contains("Total"))
+		{
+			System.out.println(stock.getTicker() + " gain: " + stock.getMarketPrice());
+			if (stock.getMarketPrice().startsWith("-"))
 			{
+				System.out.println(stock.getTicker() + " Setting color of gain: " + stock.getMarketPrice());
 				holder.marketValue.setTextColor(context.getResources().getColor(R.color.red));
+				holder.marketPrice.setTextColor(context.getResources().getColor(R.color.red));
 			}
 			else
 			{
 				holder.marketValue.setTextColor(Color.BLACK);
+				holder.marketPrice.setTextColor(Color.BLACK);
+			}
+		}
+
+		try {
+			float costPrice = Float.parseFloat(stock.getCostPrice());
+			float marketPrice = Float.parseFloat(stock.getMarketPrice());
+			System.out.printf("%f %f, %f\n", costPrice, marketPrice, (costPrice - marketPrice));
+			
+			if (costPrice > marketPrice) 
+			{
+				holder.marketValue.setTextColor(context.getResources().getColor(R.color.red));
+				holder.marketPrice.setTextColor(context.getResources().getColor(R.color.red));
+			}
+			else
+			{
+				holder.marketValue.setTextColor(Color.BLACK);
+				holder.marketPrice.setTextColor(Color.BLACK);
 			}
 		}
 		catch(NumberFormatException nfe) {

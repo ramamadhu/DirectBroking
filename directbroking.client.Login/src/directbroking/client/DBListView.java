@@ -2,6 +2,8 @@ package directbroking.client;
 
 import java.util.List;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,6 +11,9 @@ import org.jsoup.select.Elements;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -32,6 +37,37 @@ public class DBListView extends ListActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.dbwebviewmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.signout:
+            	String url = "https://www.directbroking.co.nz/DirectTrade/dynamic/signoff.aspx";
+            	HttpClient client = Login.dbHttpClientInstance();
+            	HttpPost httppost = new HttpPost(url);
+            	try
+            	{
+            		client.execute(httppost);
+            	}
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            	finish();
+                break;
+        }
+        return true;
+    }
+    
     private StockDataSource stocksSource;
     static String stock;
     static String stockQuantity;
@@ -44,9 +80,10 @@ public class DBListView extends ListActivity {
      */
     private void processPortfolio(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
-        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(21)");
-
+//        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(21)");
+        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr");
         tableRows.remove(0);
+        
         stocksSource = new StockDataSource(this);
         stocksSource.open();
         System.out.println("DEBUG: " + tableRows.size());
@@ -54,11 +91,10 @@ public class DBListView extends ListActivity {
         for(Element row : tableRows)
         {
         	Elements tds = row.getElementsByTag("td");
-            Element td = tds.first();
-            System.out.println("DEBUG: " + td.text());
             System.out.println("DEBUG: " + tds.size());
-            System.out.println("DEBUG: " + tds.get(2).text());
-
+        	if (tds.size() < 4)
+        		continue;
+        	
             stock = tds.first().text().replaceAll("\u00a0","").trim();
             System.out.printf("Parser Stock is %s\n", stock);
             if (stock.contentEquals("Code")) {
@@ -70,24 +106,38 @@ public class DBListView extends ListActivity {
                 System.out.println("NZD Subtotal");
                 
                 nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
-                marketValue = tds.get(4).text().replaceAll("\u00a0","").trim();
+                Element td = tds.get(3);
+                System.out.println("td html: " + td.html());
+                Document imgDoc = Jsoup.parse(td.html());
+                Element img = imgDoc.select("img").first();
+                String profit = img.attr("alt");
+                System.out.println("profit: " + profit);
+
+
+                if (profit.contentEquals("Up")){
+                	marketPrice = tds.get(4).text().replaceAll("\u00a0","").trim();
+                }
+                else{
+                	marketPrice = "-" + tds.get(4).text().replaceAll("\u00a0","").trim();
+                }
                 costPrice = stockQuantity = "";
                 
                 Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue);
-                System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
+                System.out.printf("Insert test stock marketValue %s\n", newStock.getMarketPrice());
 
                 continue;
             }
             
             if (stock.contentEquals("Total")) {
                 nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
-                marketValue = tds.get(4).text().replaceAll("\u00a0","").trim();
+                marketPrice = tds.get(4).text().replaceAll("\u00a0","").trim();
                 costPrice = stockQuantity = "";
                 
                 Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue);
                 System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
 
-                continue;
+//                continue;
+                break;
             }
             
             stockQuantity = tds.get(2).text().replaceAll("\u00a0","").trim();
@@ -98,6 +148,7 @@ public class DBListView extends ListActivity {
            Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue);
            System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
         }
+//        }
 
         List<Stock> values = stocksSource.getStockData();
         stocksSource.close();
