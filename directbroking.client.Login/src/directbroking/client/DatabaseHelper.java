@@ -29,10 +29,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	        + colQuantity + " INTEGER , "
 	        + colCostPrice + " INTEGER , "
 	        + colMarketPrice + " INTEGER , "
-	        + colMarketValue + " INTEGER"
+	        + colMarketValue + " INTEGER , "
+	        + colUnrealisedPLNZD + " INTEGER"
 	        + ");";
 	public DatabaseHelper(Context context) {
-		super(context, dbName, null, 39);
+		super(context, dbName, null, 40);
 	}
 
 	@Override

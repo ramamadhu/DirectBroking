@@ -19,64 +19,69 @@
         android:textSize="22dp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txtStock"
+    <include
+        android:id="@+id/txtStock_ref"
         android:layout_width="76dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/txtHeader"
         android:layout_marginTop="0dp"
-        android:background="@color/dark_grey"
-        android:gravity="center"
-        android:text="@string/stock"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textSize="15dp" />
+        layout="@layout/txtstock" />
 
     <TextView
         android:id="@+id/textCostPrice"
-        android:layout_width="69dp"
+        android:layout_width="54dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtStock"
+        android:layout_alignBottom="@+id/txtStock_ref"
         android:layout_below="@+id/txtHeader"
-        android:layout_toRightOf="@+id/txtStock"
+        android:layout_toRightOf="@+id/txtStock_ref"
         android:background="@color/dark_grey"
         android:gravity="center"
         android:text="@string/costPrice"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="15dp" />
 
     <TextView
         android:id="@+id/textMarketPrice"
-        android:layout_width="60dp"
-        android:gravity="center"
+        android:layout_width="54dp"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textCostPrice"
         android:layout_below="@+id/txtHeader"
         android:layout_toRightOf="@+id/textCostPrice"
         android:background="@color/dark_grey"
         android:text="@string/marketPrice"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="15dp" />
 
     <TextView
         android:id="@+id/textMarketValue"
-        android:layout_width="wrap_content"
+        android:layout_width="54dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textMarketPrice"
-        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textMarketPrice"
         android:layout_toRightOf="@+id/textMarketPrice"
         android:background="@color/dark_grey"
         android:gravity="center"
         android:text="@string/marketvalue"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="15dp" />
-    
+
+    <TextView
+        android:id="@+id/textUnrealisedPL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textMarketValue"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textMarketValue"
+        android:layout_toRightOf="@+id/textMarketValue"
+        android:background="@color/dark_grey"
+        android:gravity="center"
+        android:text="@string/profitLoss"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
 </RelativeLayout>

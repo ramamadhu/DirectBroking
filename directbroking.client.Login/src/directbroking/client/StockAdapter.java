@@ -4,12 +4,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class StockAdapter extends ArrayAdapter<Stock> {
@@ -38,7 +38,9 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 			holder.ticker = (TextView) row.findViewById(R.id.txtTitle);
 			holder.purchasePrice = (TextView) row.findViewById(R.id.txtTitle2);
 			holder.marketPrice = (TextView) row.findViewById(R.id.txtTitle3);
+			holder.profitLoss = (ImageView) row.findViewById(R.id.imageView1);
 			holder.marketValue = (TextView) row.findViewById(R.id.txtTitle4);
+//			holder.profitLossValue = (TextView) row.findViewById(R.id.txtTitle5);
 
 			row.setTag(holder);
 		} 
@@ -59,6 +61,9 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		holder.marketPrice.setGravity(Gravity.CENTER);
 		holder.marketValue.setText(stock.getMarketValue());
 		holder.marketValue.setGravity(Gravity.CENTER);
+//		holder.profitLossValue.setText(stock.getUnrealisedPLNZD());
+//		holder.profitLossValue.setGravity(Gravity.CENTER);
+		
 		System.out.printf("%s\n", stock.getCostPrice());
 		if (stock.getTicker().contains("NZD Subtotal") || 
 			stock.getTicker().contains("AUD Subtotal") ||
@@ -68,13 +73,11 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 			if (stock.getMarketPrice().startsWith("-"))
 			{
 				System.out.println(stock.getTicker() + " Setting color of gain: " + stock.getMarketPrice());
-				holder.marketValue.setTextColor(context.getResources().getColor(R.color.red));
-				holder.marketPrice.setTextColor(context.getResources().getColor(R.color.red));
+				holder.profitLoss.setImageResource(R.drawable.down_dbl);
 			}
 			else
 			{
-				holder.marketValue.setTextColor(Color.BLACK);
-				holder.marketPrice.setTextColor(Color.BLACK);
+				holder.profitLoss.setImageResource(R.drawable.up_dbl);
 			}
 		}
 
@@ -85,13 +88,11 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 			
 			if (costPrice > marketPrice) 
 			{
-				holder.marketValue.setTextColor(context.getResources().getColor(R.color.red));
-				holder.marketPrice.setTextColor(context.getResources().getColor(R.color.red));
+				holder.profitLoss.setImageResource(R.drawable.down_dbl);
 			}
 			else
 			{
-				holder.marketValue.setTextColor(Color.BLACK);
-				holder.marketPrice.setTextColor(Color.BLACK);
+				holder.profitLoss.setImageResource(R.drawable.up_dbl);
 			}
 		}
 		catch(NumberFormatException nfe) {
@@ -106,5 +107,7 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		TextView ticker;
 		TextView marketPrice;
 		TextView marketValue;
+		ImageView profitLoss;
+//		TextView profitLossValue;
 	}
 }

@@ -11,7 +11,7 @@
      <TextView
          android:id="@+id/txtTitle"
          android:layout_width="76dp"
-         android:layout_height="match_parent"
+         android:layout_height="wrap_content"
          android:layout_marginBottom="5dp"
          android:layout_marginTop="5dp"
          android:cacheColorHint="@android:color/transparent"
@@ -23,31 +23,40 @@
         <TextView
             android:id="@+id/txtTitle2"
             android:layout_width="69dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:cacheColorHint="@android:color/transparent"
             android:gravity="center_vertical"
             android:textColor="#000000"
             android:textSize="13dp"
-            android:cacheColorHint="@android:color/transparent"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtTitle3"
-            android:layout_width="69dp"
-            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
+            android:cacheColorHint="@android:color/transparent"
             android:gravity="center_vertical"
             android:textColor="#000000"
             android:textSize="13dp"
-            android:cacheColorHint="@android:color/transparent"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:contentDescription="@string/up_down_market_value"
+            android:src="@drawable/up_dbl" />
 
         <TextView
             android:id="@+id/txtTitle4"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:cacheColorHint="@android:color/transparent"

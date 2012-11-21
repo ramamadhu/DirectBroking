@@ -13,7 +13,8 @@ public class StockDataSource {
 	  private SQLiteDatabase database;
 	  private final DatabaseHelper dbHelper;
 	  private final String[] allColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity,
-			  													DatabaseHelper.colCostPrice, DatabaseHelper.colMarketPrice, DatabaseHelper.colMarketValue };
+			  								DatabaseHelper.colCostPrice, DatabaseHelper.colMarketPrice, 
+			  								DatabaseHelper.colMarketValue, DatabaseHelper.colUnrealisedPLNZD };
 
 	  public StockDataSource(Context context) {
 	    dbHelper = new DatabaseHelper(context);
@@ -28,13 +29,15 @@ public class StockDataSource {
 	    dbHelper.close();
 	  }
 	  
-	  public Stock createStock(String ticker, String stockQuantity, String costPrice, String marketPrice, String marketValue) {
+	  public Stock createStock(String ticker, String stockQuantity, String costPrice, String marketPrice, String marketValue,
+			  					String unrealisedPLNZD) {
 	    ContentValues values = new ContentValues();
 	    values.put(DatabaseHelper.colTicker, ticker);
 	    values.put(DatabaseHelper.colQuantity, stockQuantity);
 	    values.put(DatabaseHelper.colCostPrice, costPrice);
 	    values.put(DatabaseHelper.colMarketPrice, marketPrice);
 	    values.put(DatabaseHelper.colMarketValue, marketValue);
+	    values.put(DatabaseHelper.colUnrealisedPLNZD, unrealisedPLNZD);
 
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
 	    System.out.printf("InsertId for ticker code %s quantity %s costPrice %s, is %f\n", ticker, stockQuantity, costPrice, (float)insertId);
@@ -81,6 +84,7 @@ public class StockDataSource {
 	    stock.setCostPrice(cursor.getString(3));
 	    stock.setMarketPrice(cursor.getString(4));
 	    stock.setMarketValue(cursor.getString(5));
+	    stock.setUnrealisedPLNZD(cursor.getString(6));
 	    return stock;
 	  }
 }

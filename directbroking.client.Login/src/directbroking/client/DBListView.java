@@ -74,6 +74,7 @@ public class DBListView extends ListActivity {
     static String costPrice;
     static String marketPrice;
     static String marketValue;
+    static String unrealisedPLNZD;
     static String nzdMarketValue;
     /**
      * @param htmlData
@@ -120,9 +121,9 @@ public class DBListView extends ListActivity {
                 else{
                 	marketPrice = "-" + tds.get(4).text().replaceAll("\u00a0","").trim();
                 }
-                costPrice = stockQuantity = "";
+                unrealisedPLNZD = costPrice = stockQuantity = "";
                 
-                Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue);
+                Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue, unrealisedPLNZD);
                 System.out.printf("Insert test stock marketValue %s\n", newStock.getMarketPrice());
 
                 continue;
@@ -131,9 +132,9 @@ public class DBListView extends ListActivity {
             if (stock.contentEquals("Total")) {
                 nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
                 marketPrice = tds.get(4).text().replaceAll("\u00a0","").trim();
-                costPrice = stockQuantity = "";
+                unrealisedPLNZD = costPrice = stockQuantity = "";
                 
-                Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue);
+                Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue, unrealisedPLNZD);
                 System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
 
 //                continue;
@@ -144,8 +145,11 @@ public class DBListView extends ListActivity {
             costPrice = tds.get(3).text().replaceAll("\u00a0","").trim();
             marketPrice = tds.get(5).text().replaceAll("\u00a0","").trim();
             marketValue = tds.get(6).text().replaceAll("\u00a0","").trim();
+            unrealisedPLNZD = tds.get(7).text().replaceAll("\u00a0","").trim();
+            System.out.println("Parser: unrealisedPLNZD: " + unrealisedPLNZD);
+            
             // sql insert
-           Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue);
+           Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue, unrealisedPLNZD);
            System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
         }
 //        }
