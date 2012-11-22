@@ -33,10 +33,10 @@
     <string name="hello">TODO</string>
     <string name="portfolio"> My Portfolio</string>
     <string name="main_no_items">TODO</string>
-    <string name="stock">Stock</string>
-    <string name="costPrice">Cost</string>
-    <string name="marketPrice">Market</string>
-    <string name="marketvalue">Value</string>
+    <string name="stock">Stock Code</string>
+    <string name="costPrice">Cost Price</string>
+    <string name="marketPrice">Market Price</string>
+    <string name="marketvalue">Market Value</string>
     <string name="up_down_market_value">Market value profit or loss</string>
     <string name="profitLoss">Profit/Loss NZD</string>
 </resources>

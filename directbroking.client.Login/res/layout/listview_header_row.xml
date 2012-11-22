@@ -23,22 +23,21 @@
         android:id="@+id/txtStock"
         android:layout_width="76dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentLeft="false"
         android:layout_below="@+id/txtHeader"
         android:layout_marginTop="0dp"
         android:background="@color/dark_grey"
         android:gravity="center"
         android:text="@string/stock"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textCostPrice"
         android:layout_width="69dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/txtStock"
         android:layout_below="@+id/txtHeader"
         android:layout_toRightOf="@+id/txtStock"
         android:background="@color/dark_grey"
@@ -75,8 +74,8 @@
         android:gravity="center"
         android:text="@string/marketvalue"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:textStyle="bold" />
     
 </RelativeLayout>
