@@ -40,7 +40,6 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 			holder.marketPrice = (TextView) row.findViewById(R.id.txtTitle3);
 			holder.profitLoss = (ImageView) row.findViewById(R.id.imageView1);
 			holder.marketValue = (TextView) row.findViewById(R.id.txtTitle4);
-//			holder.profitLossValue = (TextView) row.findViewById(R.id.txtTitle5);
 
 			row.setTag(holder);
 		} 
@@ -61,8 +60,6 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		holder.marketPrice.setGravity(Gravity.CENTER);
 		holder.marketValue.setText(stock.getMarketValue());
 		holder.marketValue.setGravity(Gravity.CENTER);
-//		holder.profitLossValue.setText(stock.getUnrealisedPLNZD());
-//		holder.profitLossValue.setGravity(Gravity.CENTER);
 		
 		System.out.printf("%s\n", stock.getCostPrice());
 		if (stock.getTicker().contains("NZD Subtotal") || 
@@ -108,6 +105,5 @@ public class StockAdapter extends ArrayAdapter<Stock> {
 		TextView marketPrice;
 		TextView marketValue;
 		ImageView profitLoss;
-//		TextView profitLossValue;
 	}
 }
