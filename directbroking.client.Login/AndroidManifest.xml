@@ -26,7 +26,7 @@
             android:clearTaskOnLaunch="true" />
         
         <activity
-            android:name=".DBListView"
+            android:name=".MyPortfolio"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity

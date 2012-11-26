@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-public class DBListView extends ListActivity {
+public class MyPortfolio extends ListActivity {
 
 	private ListView listView1;
     @Override
@@ -156,10 +156,10 @@ public class DBListView extends ListActivity {
 
         List<Stock> values = stocksSource.getStockData();
         stocksSource.close();
-        StockAdapter adapter = new StockAdapter(this, R.layout.listview_item_row, values);
+        StockAdapter adapter = new StockAdapter(this, R.layout.myportfolio_item_row, values);
         listView1 = (ListView)findViewById(android.R.id.list);
          
-        View header = (View)getLayoutInflater().inflate(R.layout.listview_header_row, null);
+        View header = (View)getLayoutInflater().inflate(R.layout.myportfolio_header_row, null);
         listView1.addHeaderView(header);
         listView1.setAdapter(adapter);
 
@@ -184,27 +184,4 @@ public class DBListView extends ListActivity {
         	stocksSource.close();
         }
     }
-
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu)
-//    {
-//        getMenuInflater().inflate(R.menu.dbtextview, menu);
-//        return true;
-//    }
-
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item)
-//    {
-//        switch (item.getItemId())
-//        {
-//            case android.R.id.home:
-//                NavUtils.navigateUpFromSameTask(this);
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
 }
