@@ -197,7 +197,7 @@ public class Login extends Activity implements OnClickListener
             String responseBody = "";
 
             HttpClient client = dbHttpClientInstance();
-
+            
             try
             {
                 HttpPost httppost = new HttpPost("https://www.directbroking.co.nz/DirectTrade/dynamic/signon.aspx?Login=Go+%3E%3E");
@@ -217,7 +217,7 @@ public class Login extends Activity implements OnClickListener
             return responseBody;
         }
 
-        @Override
+		@Override
         protected void onPreExecute()
         {
 
@@ -251,7 +251,7 @@ public class Login extends Activity implements OnClickListener
             Document document = Jsoup.parse(htmlString);
             Element title = document.select("TITLE").first();
 
-            if( title.text().equals("Login | Direct Broking"))
+            if( title != null && title.text().equals("Login | Direct Broking"))
             {
                 Elements elements = document.select("span[id~=SystemMsg1_lblText]");
                 for (Element element : elements)
@@ -261,6 +261,10 @@ public class Login extends Activity implements OnClickListener
                 }
 
                 result = false;
+            }
+            else if (title == null)
+            {
+            	result = false;
             }
 
             return result;
@@ -300,16 +304,40 @@ public class Login extends Activity implements OnClickListener
         return true;
     }
     
-    public static HttpClient client;
-	public static HttpClient dbHttpClientInstance() 
+//    public static HttpClient client;
+//	public HttpClient dbHttpClientInstance(Context appContext) 
+//	{
+//		try {
+//			SSLSessionCache sslSessionCache = new SSLSessionCache(getApplicationContext());
+//			SchemeRegistry schemeRegistry = new SchemeRegistry();
+//			SSLSocketFactory sslfactory  = SSLCertificateSocketFactory.getHttpSocketFactory(10*60*1000, sslSessionCache);
+//			schemeRegistry.register(new Scheme("https", sslfactory, 443));
+//			HttpParams params = new BasicHttpParams();
+//	        HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+//	        HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+//	        HttpConnectionParams.setStaleCheckingEnabled(params, false);
+//
+//	        HttpConnectionParams.setConnectionTimeout(params, 4 * 1000);
+//	        HttpConnectionParams.setSoTimeout(params, 5 * 1000);
+//	        HttpConnectionParams.setSocketBufferSize(params, 8192);
+//
+//	        HttpClientParams.setRedirecting(params, false);			
+//			ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
+//			return new DefaultHttpClient(mgr, params);
+//	    } catch (Exception e) {
+//	        return new DefaultHttpClient();
+//	    }
+//	}
+    static public HttpClient client;
+	static public HttpClient dbHttpClientInstance()
 	{
 		if (client == null)
 		{
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
-		schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
-		HttpParams params = new BasicHttpParams();
-		ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
-		client = new DefaultHttpClient(mgr, params);
+			SchemeRegistry schemeRegistry = new SchemeRegistry();
+			schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+			HttpParams params = new BasicHttpParams();
+			ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
+			client = new DefaultHttpClient(mgr, params);
 		}
 		return client;
 	}

@@ -12,9 +12,9 @@
     <string name="DblLogo">Direct Broking Logo</string>
     <string name="LoginButton">Login Button</string>
     <string name="NzxLogo">NZX Logo</string>
-    <string name="MyPortfolio">My portfolio button</string>
-    <string name="MyOrders">My share orders</string>
-    <string name="MyAccount">My share orders</string>
+    <string name="MyPortfolio">My portfolio</string>
+    <string name="MyOrders">My Orders</string>
+    <string name="MyAccount">My Account</string>
     <string name="AboutUs">About Direct Broking</string>
 
     <color name="grey">#ffe6e6e6</color>
@@ -39,4 +39,6 @@
     <string name="marketvalue">Market Value</string>
     <string name="up_down_market_value">Market value profit or loss</string>
     <string name="profitLoss">Profit/Loss NZD</string>
+    <string name="title_activity_my_orders">MyOrders</string>
+
 </resources>

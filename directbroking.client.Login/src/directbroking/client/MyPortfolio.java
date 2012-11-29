@@ -10,6 +10,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ListActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,6 +53,7 @@ public class MyPortfolio extends ListActivity {
         switch (item.getItemId())
         {
             case R.id.signout:
+            {
             	String url = "https://www.directbroking.co.nz/DirectTrade/dynamic/signoff.aspx";
             	HttpClient client = Login.dbHttpClientInstance();
             	HttpPost httppost = new HttpPost(url);
@@ -64,6 +67,26 @@ public class MyPortfolio extends ListActivity {
                 }
             	finish();
                 break;
+            }
+            case R.id.MyOrders:
+            {
+//            	String url = "https://www.directbroking.co.nz/DirectTrade/secure/orders.aspx";
+//            	HttpClient client = Login.dbHttpClientInstance();
+//            	HttpPost httppost = new HttpPost(url);
+            	try
+            	{
+//            		client.execute(httppost);
+            		Context AppContext = getApplicationContext();
+                    Intent myOrders = new Intent(AppContext, MyOrders.class);
+                    myOrders.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            		startActivity(myOrders);
+            	}
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            	break;
+            }
         }
         return true;
     }
