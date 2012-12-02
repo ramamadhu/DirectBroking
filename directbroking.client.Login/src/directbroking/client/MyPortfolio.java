@@ -55,7 +55,7 @@ public class MyPortfolio extends ListActivity {
             case R.id.signout:
             {
             	String url = "https://www.directbroking.co.nz/DirectTrade/dynamic/signoff.aspx";
-            	HttpClient client = Login.dbHttpClientInstance();
+            	HttpClient client = DBHttpClient.defaultInstance();
             	HttpPost httppost = new HttpPost(url);
             	try
             	{
@@ -71,7 +71,7 @@ public class MyPortfolio extends ListActivity {
             case R.id.MyOrders:
             {
 //            	String url = "https://www.directbroking.co.nz/DirectTrade/secure/orders.aspx";
-//            	HttpClient client = Login.dbHttpClientInstance();
+//            	HttpClient client = DBHttpClient.sslSessionClientInstance(getApplicationContext());
 //            	HttpPost httppost = new HttpPost(url);
             	try
             	{

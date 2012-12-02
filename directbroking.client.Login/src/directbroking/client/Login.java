@@ -8,14 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -196,7 +189,7 @@ public class Login extends Activity implements OnClickListener
             String passwordString = inputs[1];
             String responseBody = "";
 
-            HttpClient client = dbHttpClientInstance();
+            HttpClient client = DBHttpClient.sslSessionClientInstance(AppContext);
             
             try
             {
@@ -328,17 +321,17 @@ public class Login extends Activity implements OnClickListener
 //	        return new DefaultHttpClient();
 //	    }
 //	}
-    static public HttpClient client;
-	static public HttpClient dbHttpClientInstance()
-	{
-		if (client == null)
-		{
-			SchemeRegistry schemeRegistry = new SchemeRegistry();
-			schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
-			HttpParams params = new BasicHttpParams();
-			ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
-			client = new DefaultHttpClient(mgr, params);
-		}
-		return client;
-	}
+//    static public HttpClient client;
+//	static public HttpClient dbHttpClientInstance()
+//	{
+//		if (client == null)
+//		{
+//			SchemeRegistry schemeRegistry = new SchemeRegistry();
+//			schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+//			HttpParams params = new BasicHttpParams();
+//			ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
+//			client = new DefaultHttpClient(mgr, params);
+//		}
+//		return client;
+//	}
 }

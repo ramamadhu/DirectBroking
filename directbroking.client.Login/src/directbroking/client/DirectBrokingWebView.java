@@ -60,7 +60,7 @@ public class DirectBrokingWebView extends Activity
         {
             case R.id.signout:
             	String url = "https://www.directbroking.co.nz/DirectTrade/dynamic/signoff.aspx";
-            	HttpClient client = Login.dbHttpClientInstance();
+            	HttpClient client = DBHttpClient.defaultInstance();
             	HttpPost httppost = new HttpPost(url);
             	try
             	{
