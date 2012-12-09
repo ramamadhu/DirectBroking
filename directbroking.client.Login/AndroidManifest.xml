@@ -33,20 +33,15 @@
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity
+            android:name=".MyOrders"
+            android:alwaysRetainTaskState="false"
+            android:clearTaskOnLaunch="true" />
+        <activity
             android:name=".Login"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true"
             android:label="Direct Broking"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MyOrders"
-            android:label="@string/title_activity_my_orders" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
