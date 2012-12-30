@@ -24,7 +24,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	        + portfolioTable
 	        + " ("
 	        + COLUMN_ID + " integer primary key autoincrement , "
-//	        + colTicker + " TEXT PRIMARY KEY , "
 	        + colTicker + " TEXT , "
 	        + colQuantity + " INTEGER , "
 	        + colCostPrice + " INTEGER , "
@@ -43,8 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	@Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-
 		db.execSQL("DROP TABLE IF EXISTS " + portfolioTable);
 		onCreate(db);
 	}
