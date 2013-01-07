@@ -26,7 +26,8 @@
         <activity
             android:name=".MyPortfolio"
             android:alwaysRetainTaskState="false"
-            android:clearTaskOnLaunch="true" />
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name="AboutUs"
             android:alwaysRetainTaskState="false"

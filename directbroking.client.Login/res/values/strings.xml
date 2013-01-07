@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app">DirectBroking</string>
-    <string name="app_name">DirectBroking</string>
+    <string name="app_name">Direct Broking</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="login">Login</string>
