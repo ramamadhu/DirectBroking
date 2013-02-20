@@ -58,6 +58,14 @@ public class Stock
 	public void setPercentPortfolio(String percentPortfolio) {
 		this.percentPortfolio = percentPortfolio;
 	}
+	
+	public String getLastOrder() {
+		return lastOrder;
+	}
+	public void setLastOrder(String lastOrder) {
+		this.lastOrder = lastOrder;
+	}
+	
 	private String costPrice;
 	private String marketPrice;
 
@@ -66,6 +74,7 @@ public class Stock
 	private String valueNZD;
 	private String unrealisedPLNZD;
 	private String percentPortfolio;
+	private String lastOrder;
 	
 	public Stock()
 	{

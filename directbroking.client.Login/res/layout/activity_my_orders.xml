@@ -2,13 +2,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/red"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/MyOrders"
+        android:textColor="#FFFFFF"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+    
+        <TextView
+            android:id="@+id/txtStock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/txtHeader"
+            android:background="@color/dark_grey"
+            android:gravity="center"
+            android:maxWidth="76dp"
+            android:singleLine="false"
+            android:text="@string/stock"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/textRemainingOrder"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtStock"
+        android:layout_below="@+id/txtHeader"
+        android:layout_toLeftOf="@+id/textMarketValue"
+        android:layout_toRightOf="@+id/txtStock"
+        android:background="@color/dark_grey"
+        android:gravity="center"
+        android:text="@string/remainingorder"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textMarketValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".MyOrders" />
-
+        android:layout_alignBottom="@+id/textRemainingOrder"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtHeader"
+        android:background="@color/dark_grey"
+        android:gravity="center"
+        android:text="@string/marketvalue"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+    
 </RelativeLayout>

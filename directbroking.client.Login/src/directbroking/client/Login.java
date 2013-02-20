@@ -200,6 +200,7 @@ public class Login extends Activity implements OnClickListener
                 nameValuePairs.add(new BasicNameValuePair("startin", "../secure/portfolios.aspx"));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = client.execute(httppost);
+                
                 responseBody = EntityUtils.toString(response.getEntity());
             }
             catch (Exception e)

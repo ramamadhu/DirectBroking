@@ -12,9 +12,12 @@ import android.database.sqlite.SQLiteDatabase;
 public class StockDataSource {
 	  private SQLiteDatabase database;
 	  private final DatabaseHelper dbHelper;
-	  private final String[] allColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity,
+	  private final String[] portfolioColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity,
 			  								DatabaseHelper.colCostPrice, DatabaseHelper.colMarketPrice, 
 			  								DatabaseHelper.colMarketValue, DatabaseHelper.colUnrealisedPLNZD };
+
+	  private final String[] ordersColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colLastOrder,
+				DatabaseHelper.colQuantity };
 
 	  public StockDataSource(Context context) {
 	    dbHelper = new DatabaseHelper(context);
@@ -42,7 +45,7 @@ public class StockDataSource {
 	    long insertId = database.insert(DatabaseHelper.portfolioTable, null, values);
 	    System.out.printf("InsertId for ticker code %s quantity %s costPrice %s, is %f\n", ticker, stockQuantity, costPrice, (float)insertId);
 
-	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, DatabaseHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
+	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, portfolioColumns, DatabaseHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
 	    cursor.moveToFirst();
 	    Stock newStock = null;
 	    if(cursor.moveToFirst()) {
@@ -64,7 +67,7 @@ public class StockDataSource {
 	  public List<Stock> getStockData() {
 	    List<Stock> stockList = new ArrayList<Stock>();
 
-	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, allColumns, null, null, null, null, null);
+	    Cursor cursor = database.query(DatabaseHelper.portfolioTable, portfolioColumns, null, null, null, null, null);
 	    cursor.moveToFirst();
 	    while (!cursor.isAfterLast()) {
 	      Stock stock = cursorToStock(cursor);
@@ -87,4 +90,37 @@ public class StockDataSource {
 	    stock.setUnrealisedPLNZD(cursor.getString(6));
 	    return stock;
 	  }
+	  
+	  public Stock createOrder(String ticker, String stockQuantity, String lastOrder)
+	  {
+		    ContentValues values = new ContentValues();
+		    values.put(DatabaseHelper.colTicker, ticker);
+		    values.put(DatabaseHelper.colQuantity, stockQuantity);
+		    values.put(DatabaseHelper.colLastOrder, lastOrder);
+
+		    long insertId = database.insert(DatabaseHelper.ordersTable, null, values);
+		    System.out.printf("InsertId for ticker code %s quantity %s lastOrder %s, is %f\n", ticker, stockQuantity, lastOrder, (float)insertId);
+
+		    Cursor cursor = database.query(DatabaseHelper.ordersTable, ordersColumns, DatabaseHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
+		    cursor.moveToFirst();
+		    Stock newStock = null;
+		    if(cursor.moveToFirst()) {
+		        newStock = cursorToStockOrder(cursor);
+		    }
+		    else {
+		        System.out.println("cursor is null");
+		    }
+		    cursor.close();
+		    return newStock;
+		    
+	  }
+	  
+	  private Stock cursorToStockOrder(Cursor cursor) {
+		    Stock stock = new Stock();
+		    stock.setTicker(cursor.getString(1));
+		    stock.setLastOrder(cursor.getString(2));
+		    stock.setQuantity(cursor.getString(3));
+		    
+		    return stock;
+		  }	  
 }

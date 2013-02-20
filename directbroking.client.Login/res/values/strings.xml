@@ -40,5 +40,6 @@
     <string name="up_down_market_value">Market value profit or loss</string>
     <string name="profitLoss">Profit/Loss NZD</string>
     <string name="title_activity_my_orders">MyOrders</string>
+    <string name="remainingorder">Remaining Order</string>
 
 </resources>
