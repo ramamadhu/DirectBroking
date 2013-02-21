@@ -16,12 +16,16 @@ import android.net.SSLSessionCache;
 public class DBHttpClient 
 {
   static public HttpClient client;
-	static public HttpClient defaultInstance()
+	static public HttpClient defaultInstance(Context appContext)
 	{
 		if (client == null)
 		{
+			System.out.print("****//////** New default HttpClient\n");
+			SSLSessionCache sslSessionCache = new SSLSessionCache(appContext);
+			SSLSocketFactory sslfactory  = SSLCertificateSocketFactory.getHttpSocketFactory(10*60*1000, sslSessionCache);
+
 			SchemeRegistry schemeRegistry = new SchemeRegistry();
-			schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+			schemeRegistry.register(new Scheme("https", sslfactory, 443));
 			HttpParams params = new BasicHttpParams();
 			ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
 			client = new DefaultHttpClient(mgr, params);
@@ -51,7 +55,7 @@ public class DBHttpClient
 			ThreadSafeClientConnManager mgr = new ThreadSafeClientConnManager(params, schemeRegistry);
 			return new DefaultHttpClient(mgr, params);
 	    } catch (Exception e) {
-	        return defaultInstance();
+	        return defaultInstance(appContext);
 	    }
 	}
 	

@@ -189,7 +189,7 @@ public class Login extends Activity implements OnClickListener
             String passwordString = inputs[1];
             String responseBody = "";
 
-            HttpClient client = DBHttpClient.sslSessionClientInstance(AppContext);
+            HttpClient client = DBHttpClient.defaultInstance(AppContext);
             
             try
             {

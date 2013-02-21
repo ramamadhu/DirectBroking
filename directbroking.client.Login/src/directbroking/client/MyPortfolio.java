@@ -1,14 +1,10 @@
 package directbroking.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +12,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -32,13 +27,12 @@ import android.widget.Toast;
 public class MyPortfolio extends ListActivity {
 
 	private ListView listView1;
-    private ProgressDialog dialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
         Bundle extras = getIntent().getExtras();
         if(extras != null)
         {
@@ -66,7 +60,7 @@ public class MyPortfolio extends ListActivity {
             case R.id.signout:
             {
             	String url = "https://www.directbroking.co.nz/DirectTrade/dynamic/signoff.aspx";
-            	HttpClient client = DBHttpClient.defaultInstance();
+            	HttpClient client = DBHttpClient.defaultInstance(getApplicationContext());
             	HttpPost httppost = new HttpPost(url);
             	try
             	{
@@ -83,60 +77,8 @@ public class MyPortfolio extends ListActivity {
             {
             	try 
             	{
-                    dialog = new ProgressDialog(this);
-                    dialog.setTitle("Please wait");
-                    dialog.setMessage("Verifying username and password...");
-                    dialog.show();
-
                     LoginActionTask loginActionTask = new LoginActionTask(this);
-                    loginActionTask.execute(new String[] {"2139723", "Srinivas60"});
-
-//            	HttpClient client = DBHttpClient.sslSessionClientInstance(getApplicationContext());
-//
-//                  HttpPost httppost = new HttpPost("https://www.directbroking.co.nz/DirectTrade/dynamic/signon.aspx?Login=Go+%3E%3E");
-//                  List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-//                  nameValuePairs.add(new BasicNameValuePair("username", "2139723"));
-//                  nameValuePairs.add(new BasicNameValuePair("password", "Srinivas60"));
-//                  nameValuePairs.add(new BasicNameValuePair("startin", "../secure/orders.aspx"));
-//                  httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//                  HttpResponse response = client.execute(httppost);
-//                  String responseBody = EntityUtils.toString(response.getEntity());
-//
-//            	Context AppContext = getApplicationContext();
-//            	Intent myOrders = new Intent(AppContext, MyOrders.class);
-//            	myOrders.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-////            	myOrders.putExtra("htmlString", responseBody);
-//            	AppContext.startActivity(myOrders);
-
-//            	String url = "https://www.directbroking.co.nz/DirectTrade/secure/orders.aspx";
-//            	HttpClient client = DBHttpClient.sslSessionClientInstance(getApplicationContext());
-//            	HttpPost httppost = new HttpPost(url);
-//            	try
-//            	{
-//                    HttpResponse response = client.execute(httppost);
-//                    String responseBody = EntityUtils.toString(response.getEntity());
-//
-//            		Context AppContext = getApplicationContext();
-//                    Intent myOrders = new Intent(AppContext, MyOrders.class);
-//                    myOrders.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    myOrders.putExtra("htmlString", responseBody);
-//            		AppContext.startActivity(myOrders);
-
-//                    HttpPost httppost = new HttpPost("https://www.directbroking.co.nz/DirectTrade/dynamic/signon.aspx?Login=Go+%3E%3E");
-//                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-//                    nameValuePairs.add(new BasicNameValuePair("username", "2139723"));
-//                    nameValuePairs.add(new BasicNameValuePair("password", "Srinivas60"));
-//                    nameValuePairs.add(new BasicNameValuePair("startin", "../secure/orders.aspx"));
-//                    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//                    HttpResponse response = client.execute(httppost);
-//                    
-//                    String responseBody = EntityUtils.toString(response.getEntity());
-//                    
-//            		Context AppContext = getApplicationContext();
-//                    Intent myOrders = new Intent(AppContext, DirectBrokingWebView.class);
-//                    myOrders.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    myOrders.putExtra("htmlString", responseBody);
-//            		AppContext.startActivity(myOrders);
+                    loginActionTask.execute();
             	}
                 catch (Exception e)
                 {
@@ -161,7 +103,6 @@ public class MyPortfolio extends ListActivity {
      */
     private void processPortfolio(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
-//        Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr:gt(0):lt(21)");
         Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr");
         tableRows.remove(0);
         
@@ -216,8 +157,6 @@ public class MyPortfolio extends ListActivity {
                 
                 Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue, unrealisedPLNZD);
                 System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
-
-//                continue;
                 break;
             }
             
@@ -232,7 +171,6 @@ public class MyPortfolio extends ListActivity {
            Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue, unrealisedPLNZD);
            System.out.printf("Insert test stock costPrice %s\n", newStock.getCostPrice());
         }
-//        }
 
         List<Stock> values = stocksSource.getStockData();
         stocksSource.close();
@@ -287,24 +225,15 @@ public class MyPortfolio extends ListActivity {
         @Override
         protected String doInBackground(String...inputs)
         {
-            String accountNumString = inputs[0];
-            String passwordString = inputs[1];
             String responseBody = "";
-
-            HttpClient client = DBHttpClient.sslSessionClientInstance(AppContext);
-            
-            try
-            {
-                HttpPost httppost = new HttpPost("https://www.directbroking.co.nz/DirectTrade/dynamic/signon.aspx?Login=Go+%3E%3E");
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
-                nameValuePairs.add(new BasicNameValuePair("username", accountNumString));
-                nameValuePairs.add(new BasicNameValuePair("password", passwordString));
-                nameValuePairs.add(new BasicNameValuePair("startin", "../secure/orders.aspx"));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = client.execute(httppost);
-                
-                responseBody = EntityUtils.toString(response.getEntity());
-            }
+        	String url = "https://www.directbroking.co.nz/DirectTrade/secure/orders.aspx";
+        	HttpClient client = DBHttpClient.defaultInstance(getApplicationContext());
+        	HttpPost httppost = new HttpPost(url);
+        	try
+        	{
+        		HttpResponse response = client.execute(httppost);
+        		responseBody = EntityUtils.toString(response.getEntity());
+        	}
             catch (Exception e)
             {
                 e.printStackTrace();
@@ -322,13 +251,16 @@ public class MyPortfolio extends ListActivity {
         @Override
         protected void onPostExecute(String result)
         {
-            dialog.dismiss();
             if(onLoginSuccess(result))
             {
                 Intent myPortfolio = new Intent(AppContext, MyOrders.class);
                 myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 myPortfolio.putExtra("htmlString", result);
                 AppContext.startActivity(myPortfolio);
+            }
+            else
+            {
+            	finish();
             }
         }
 
