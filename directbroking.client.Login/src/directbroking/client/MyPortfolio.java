@@ -70,15 +70,18 @@ public class MyPortfolio extends ListActivity {
                 {
                     e.printStackTrace();
                 }
-            	finish();
+                Intent login = new Intent(getApplicationContext(), Login.class);
+                login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(login);
+                
                 break;
             }
             case R.id.MyOrders:
             {
             	try 
             	{
-                    LoginActionTask loginActionTask = new LoginActionTask(this);
-                    loginActionTask.execute();
+                    MyOrdersActionTask myOrdersTask = new MyOrdersActionTask(this);
+                    myOrdersTask.execute();
             	}
                 catch (Exception e)
                 {
@@ -160,6 +163,38 @@ public class MyPortfolio extends ListActivity {
                 break;
             }
             
+//            if (stock.contentEquals("Cash Positions") || stock.contentEquals("Account"))
+//            {
+//            	continue;
+//            }
+//            
+//            if (stock.contentEquals("Direct Broking Call") || stock.contentEquals("Online Multi-Currency"))
+//            {
+//            	nzdMarketValue = tds.get(4).text().replaceAll("\u00a0","").trim();
+//            	marketPrice = unrealisedPLNZD = costPrice = stockQuantity = "";
+//            	Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue, unrealisedPLNZD);
+//            	System.out.printf("Call account %s\n", newStock.getMarketValue());
+//            	continue;
+//            }
+//            
+//            if (stock.contentEquals("Cash Subtotal"))
+//            {
+//            	nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
+//            	marketPrice = unrealisedPLNZD = costPrice = stockQuantity = "";
+//            	Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue, unrealisedPLNZD);
+//                System.out.printf("Cash Subtotal %s\n", newStock.getMarketValue());
+//            	continue;
+//            }
+//
+//            if (stock.contentEquals("Portfolio Total"))
+//            {
+//            	nzdMarketValue = tds.get(1).text().replaceAll("\u00a0","").trim();
+//            	marketPrice = unrealisedPLNZD = costPrice = stockQuantity = "";
+//            	Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, nzdMarketValue, unrealisedPLNZD);
+//                System.out.printf("Portfolio total %s\n", newStock.getMarketValue());
+//            	break;
+//            }
+            
             stockQuantity = tds.get(2).text().replaceAll("\u00a0","").trim();
             costPrice = tds.get(3).text().replaceAll("\u00a0","").trim();
             marketPrice = tds.get(5).text().replaceAll("\u00a0","").trim();
@@ -213,11 +248,11 @@ public class MyPortfolio extends ListActivity {
         toast.show();
     }
 
-    private class LoginActionTask extends AsyncTask<String,Void, String>
+    private class MyOrdersActionTask extends AsyncTask<String,Void, String>
     {
         Context AppContext;
 
-        private LoginActionTask(Context context)
+        private MyOrdersActionTask(Context context)
         {
             AppContext = context.getApplicationContext();
         }
@@ -253,6 +288,7 @@ public class MyPortfolio extends ListActivity {
         {
             if(onLoginSuccess(result))
             {
+            	finish();
                 Intent myPortfolio = new Intent(AppContext, MyOrders.class);
                 myPortfolio.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 myPortfolio.putExtra("htmlString", result);
@@ -261,6 +297,9 @@ public class MyPortfolio extends ListActivity {
             else
             {
             	finish();
+                Intent login = new Intent(getApplicationContext(), Login.class);
+                login.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(login);
             }
         }
 
