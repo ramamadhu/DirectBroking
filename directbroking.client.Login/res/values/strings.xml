@@ -29,7 +29,7 @@
     <string name="title_activity_table_view">TableView</string>
     <string name="Signout">Sign out</string>
     <string name="portfoliotab">Portfolio</string>
-    <string name="accountTab">Account</string>
+    <string name="account">Account</string>
     <string name="hello">TODO</string>
     <string name="portfolio"> My Portfolio</string>
     <string name="main_no_items">TODO</string>
@@ -41,5 +41,8 @@
     <string name="profitLoss">Profit/Loss NZD</string>
     <string name="title_activity_my_orders">MyOrders</string>
     <string name="remainingorder">Remaining Order</string>
+    <string name="title_activity_my_account">MyAccount</string>
+    <string name="balance">Balance</string>
+    <string name="interestrate">Interest Rate</string>
 
 </resources>

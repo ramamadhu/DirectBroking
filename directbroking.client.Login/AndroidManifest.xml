@@ -16,28 +16,28 @@
         android:label="@string/app_name"
         android:persistent="true" >
         <activity
-            android:name=".DirectBrokingWebView"
+            android:name="directbroking.client.DirectBrokingWebView"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity
-            android:name=".DBTextView"
+            android:name="directbroking.client.DBTextView"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity
-            android:name=".MyPortfolio"
+            android:name="directbroking.client.MyPortfolio"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="AboutUs"
+            android:name="directbroking.client.AboutUs"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity
-            android:name=".MyOrders"
+            android:name="directbroking.client.MyOrders"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true" />
         <activity
-            android:name=".Login"
+            android:name="directbroking.client.Login"
             android:alwaysRetainTaskState="false"
             android:clearTaskOnLaunch="true"
             android:label="Direct Broking"
@@ -47,6 +47,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="directbroking.client.MyAccount"
+            android:label="@string/title_activity_my_account" >
         </activity>
     </application>
 

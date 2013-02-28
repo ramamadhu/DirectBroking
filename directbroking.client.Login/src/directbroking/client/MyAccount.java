@@ -19,23 +19,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MyOrders extends Activity {
+public class MyAccount extends Activity {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_orders);
-        Bundle extras = getIntent().getExtras();
-        if(extras != null)
-        {
-            if (extras.getString("htmlString") != null)
-            {
-                String htmlData = extras.getString("htmlString");
-                processOrders(htmlData);
-            }
-        }
-
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_my_account);
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,13 +71,13 @@ public class MyOrders extends Activity {
                 }
             	break;
             }
-            case R.id.MyAccount:
+            case R.id.MyOrders:
             {
-            	try
+            	try 
             	{
-                	String url = "https://www.directbroking.co.nz/DirectTrade/secure/accounts.aspx";
-                    SwitchActivity myAccountTask = new SwitchActivity(this, url, MyAccount.class);
-                    myAccountTask.execute();
+                	String url = "https://www.directbroking.co.nz/DirectTrade/secure/orders.aspx";
+                    SwitchActivity myOrdersTask = new SwitchActivity(this, url, MyOrders.class);
+                    myOrdersTask.execute();
             	}
                 catch (Exception e)
                 {
@@ -95,7 +85,6 @@ public class MyOrders extends Activity {
                 }
             	break;
             }
-
         }
         return true;
     }
@@ -115,7 +104,7 @@ public class MyOrders extends Activity {
         super.onDestroy();
     }
     
-    private void processOrders(String htmlData) {
+    private void processAccounts(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
     	Element title = document.select("TITLE").first();
     	

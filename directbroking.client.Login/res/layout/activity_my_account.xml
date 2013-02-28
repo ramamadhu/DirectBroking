@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyAccount" >
+
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/red"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/MyAccount"
+        android:textColor="#FFFFFF"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+    
+        <TextView
+            android:id="@+id/txtAccountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/txtHeader"
+            android:background="@color/dark_grey"
+            android:gravity="center"
+            android:maxWidth="76dp"
+            android:singleLine="false"
+            android:text="@string/account"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textInterestRate"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textBalance"
+        android:layout_alignBottom="@+id/txtAccountName"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="35dp"
+        android:layout_toRightOf="@+id/textBalance"
+        android:background="@color/dark_grey"
+        android:gravity="center"
+        android:text="@string/interestrate"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textBalance"
+        android:layout_width="69dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/txtAccountName"
+        android:layout_alignBottom="@+id/txtAccountName"
+        android:layout_toRightOf="@+id/txtAccountName"
+        android:background="@color/dark_grey"
+        android:gravity="center"
+        android:text="@string/balance"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+    
+</RelativeLayout>
