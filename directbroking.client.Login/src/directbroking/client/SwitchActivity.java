@@ -29,7 +29,6 @@ public class SwitchActivity extends AsyncTask<String,Void, String>
 		url = urlString;
 		activityClass = cls;
 		appActivity = activity;
-
 	}
 
 	@Override
@@ -54,7 +53,6 @@ public class SwitchActivity extends AsyncTask<String,Void, String>
 	@Override
 	protected void onPreExecute()
 	{
-
 	}
 
 	@Override

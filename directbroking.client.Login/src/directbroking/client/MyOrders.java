@@ -1,18 +1,16 @@
 package directbroking.client;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -21,6 +19,8 @@ import android.widget.Toast;
 
 public class MyOrders extends Activity {
 
+	private ProgressDialog dialog;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +71,7 @@ public class MyOrders extends Activity {
             {
             	try 
             	{
+            		displayProgress();
             		String url = "https://www.directbroking.co.nz/DirectTrade/secure/portfolios.aspx";
             		SwitchActivity myPortfolioTask = new SwitchActivity(this, url, MyPortfolio.class);
                     myPortfolioTask.execute();
@@ -85,6 +86,7 @@ public class MyOrders extends Activity {
             {
             	try
             	{
+            		displayProgress();
                 	String url = "https://www.directbroking.co.nz/DirectTrade/secure/accounts.aspx";
                     SwitchActivity myAccountTask = new SwitchActivity(this, url, MyAccount.class);
                     myAccountTask.execute();
@@ -142,4 +144,11 @@ public class MyOrders extends Activity {
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
+    
+	private void displayProgress() {
+		dialog = new ProgressDialog(this);
+		dialog.setTitle("Please wait");
+		dialog.setMessage("Processing request ...");
+		dialog.show();
+	}
 }
