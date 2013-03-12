@@ -46,11 +46,6 @@ public class AccountAdapter extends ArrayAdapter<Account> {
 		}
 
 		Account account = accountList.get(position);
-//		System.out.printf("StockAdapter code: %s\n", account.getTicker());
-//		System.out.printf("StockAdapter quantity: %s\n", account.getQuantity());
-//		System.out.printf("StockAdapter purchasePrice: %s\n", account.getCostPrice());
-//		System.out.printf("StockAdapter getMarketPrice: %s\n", account.getMarketPrice());
-//		System.out.printf("StockAdapter getMarketValue: %s\n", account.getMarketValue());
 		holder.accountName.setText(account.getAccountName());
 		holder.currency.setText(account.getCurrency());
 		holder.balance.setText(account.getBalance());
@@ -61,41 +56,6 @@ public class AccountAdapter extends ArrayAdapter<Account> {
 		holder.balance.setGravity(Gravity.CENTER);
 		holder.interestRate.setGravity(Gravity.CENTER);
 		
-//		System.out.printf("%s\n", account.getCostPrice());
-//		if (account.getTicker().contains("NZD Subtotal") || 
-//			account.getTicker().contains("AUD Subtotal") ||
-//			account.getTicker().contains("Total"))
-//		{
-//			System.out.println(account.getTicker() + " gain: " + account.getMarketPrice());
-//			if (account.getMarketPrice().startsWith("-"))
-//			{
-//				System.out.println(account.getTicker() + " Setting color of gain: " + account.getMarketPrice());
-//				holder.profitLoss.setImageResource(R.drawable.down_dbl);
-//			}
-//			else
-//			{
-//				holder.profitLoss.setImageResource(R.drawable.up_dbl);
-//			}
-//		}
-//
-//		try {
-//			float costPrice = Float.parseFloat(account.getCostPrice());
-//			float marketPrice = Float.parseFloat(account.getMarketPrice());
-//			System.out.printf("%f %f, %f\n", costPrice, marketPrice, (costPrice - marketPrice));
-//			
-//			if (costPrice > marketPrice) 
-//			{
-//				holder.profitLoss.setImageResource(R.drawable.down_dbl);
-//			}
-//			else
-//			{
-//				holder.profitLoss.setImageResource(R.drawable.up_dbl);
-//			}
-//		}
-//		catch(NumberFormatException nfe) {
-//			   System.out.println("Could not parse " + nfe);
-//		}
-
 		return row;
 	}
 

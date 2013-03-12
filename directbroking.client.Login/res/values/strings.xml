@@ -6,7 +6,7 @@
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="login">Login</string>
-    <string name="PasswordHint">password</string>
+    <string name="PasswordHint">Password</string>
     <string name="LoginHint">Account No.</string>
     <string name="UsernameHint">Or login with your username</string>
     <string name="DblLogo">Direct Broking Logo</string>

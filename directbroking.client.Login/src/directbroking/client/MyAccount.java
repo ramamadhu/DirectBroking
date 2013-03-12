@@ -118,9 +118,10 @@ public class MyAccount extends Activity {
     private void processAccounts(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
     	Elements tableRows = document.select("table[id=CAccountListTable] tr");
-        tableRows.remove(0);
+
+    	// The first two rows contain unwanted information 
+    	tableRows.remove(0);
         tableRows.remove(1);
-//        tableRows.remove(2);
 
     	accountSource = StockDataSource.Instance(this);
     	accountSource.open();
@@ -142,7 +143,6 @@ public class MyAccount extends Activity {
             rate = tds.get(3).text().replaceAll("\u00a0","").trim();
             System.out.printf("Name %s, currency %s, balance %s, rate %s\n", name, currency, balance, rate);
 			accountSource.addAccount(name, currency, balance, rate);
-//        	accountSource.close();
         }
         
         List<Account> values = accountSource.getAccountData();
