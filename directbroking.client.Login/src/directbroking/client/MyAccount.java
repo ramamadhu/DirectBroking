@@ -1,30 +1,39 @@
 package directbroking.client;
 
-import org.apache.http.HttpResponse;
+import java.util.List;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ListView;
 
 public class MyAccount extends Activity {
 
+	private ListView listView1;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_my_account);
+        setContentView(R.layout.listview);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            if (extras.getString("htmlString") != null)
+            {
+                String htmlData = extras.getString("htmlString");
+                processAccounts(htmlData);
+            }
+        }
 	}
 
     @Override
@@ -104,31 +113,46 @@ public class MyAccount extends Activity {
         super.onDestroy();
     }
     
+    private StockDataSource accountSource;
+    
     private void processAccounts(String htmlData) {
     	Document document = Jsoup.parse(htmlData);
-    	Element title = document.select("TITLE").first();
-    	
-        if( title != null && title.text().equals("My Orders | Direct Broking"))
-        {
-            Elements elements = document.select("span[id~=SystemMsg1_lblText]");
-            for (Element element : elements)
-            {
-                displayNotification(element.html());
-                break;
-            }
-        }
-        else
-        {
-            String table = document.select("table[id=PortfolioPositionsTable]").outerHtml();
-        }
-    }
-    private void displayNotification(CharSequence text)
-    {
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
+    	Elements tableRows = document.select("table[id=CAccountListTable] tr");
+        tableRows.remove(0);
+        tableRows.remove(1);
+//        tableRows.remove(2);
 
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
+    	accountSource = StockDataSource.Instance(this);
+    	accountSource.open();
+
+        for(Element row : tableRows)
+        {
+			Elements tds = row.getElementsByTag("td");
+            System.out.println("DEBUG: " + tds.size());
+        	if (tds.size() < 4)
+        		continue;
+
+        	String currency;
+			String balance;
+			String rate;
+			String name;
+            name = tds.first().text().replaceAll("\u00a0","").trim();
+            currency = tds.get(1).text().replaceAll("\u00a0","").trim();
+            balance = tds.get(2).text().replaceAll("\u00a0","").trim();
+            rate = tds.get(3).text().replaceAll("\u00a0","").trim();
+            System.out.printf("Name %s, currency %s, balance %s, rate %s\n", name, currency, balance, rate);
+			accountSource.addAccount(name, currency, balance, rate);
+//        	accountSource.close();
+        }
+        
+        List<Account> values = accountSource.getAccountData();
+        accountSource.close();
+        AccountAdapter adapter = new AccountAdapter(this, R.layout.myaccount_item_row, values);
+        listView1 = (ListView)findViewById(android.R.id.list);
+         
+        View header = (View)getLayoutInflater().inflate(R.layout.activity_my_account, null);
+        listView1.addHeaderView(header);
+        listView1.setAdapter(adapter);
+
     }
 }

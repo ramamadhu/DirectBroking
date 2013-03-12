@@ -76,10 +76,9 @@ public class Login extends Activity implements OnClickListener
         img.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.nzx.com"));
-            startActivity(intent);
-        }
-    });
-
+                startActivity(intent);
+            }
+        });
     }
 
 

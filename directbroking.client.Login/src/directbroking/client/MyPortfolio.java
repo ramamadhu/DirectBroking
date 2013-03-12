@@ -118,7 +118,7 @@ public class MyPortfolio extends ListActivity {
         Elements tableRows = document.select("table[id=PortfolioPositionsTable] tr");
         tableRows.remove(0);
         
-        stocksSource = new StockDataSource(this);
+        stocksSource = StockDataSource.Instance(this);
         stocksSource.open();
         System.out.println("DEBUG: " + tableRows.size());
 

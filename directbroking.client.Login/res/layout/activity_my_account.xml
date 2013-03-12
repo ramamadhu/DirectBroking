@@ -20,28 +20,44 @@
     
         <TextView
             android:id="@+id/txtAccountName"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/txtHeader"
             android:background="@color/dark_grey"
             android:gravity="center"
-            android:maxWidth="76dp"
+            android:maxWidth="100dp"
             android:singleLine="false"
             android:text="@string/account"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:width="100dp" />
 
     <TextView
-        android:id="@+id/textInterestRate"
-        android:layout_width="69dp"
+        android:id="@+id/textBalance"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textBalance"
         android:layout_alignBottom="@+id/txtAccountName"
+        android:layout_toRightOf="@+id/txtCurrency"
+        android:background="@color/dark_grey"
+        android:gravity="center"
+        android:maxWidth="100dp"
+        android:text="@string/balance"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:width="100dp" />
+    
+    <TextView
+        android:id="@+id/textInterestRate"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textBalance"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="35dp"
+        android:layout_alignTop="@+id/textBalance"
         android:layout_toRightOf="@+id/textBalance"
         android:background="@color/dark_grey"
         android:gravity="center"
@@ -52,18 +68,20 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textBalance"
-        android:layout_width="69dp"
+        android:id="@+id/txtCurrency"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/txtAccountName"
-        android:layout_alignBottom="@+id/txtAccountName"
+        android:layout_below="@+id/txtHeader"
         android:layout_toRightOf="@+id/txtAccountName"
         android:background="@color/dark_grey"
         android:gravity="center"
-        android:text="@string/balance"
+        android:maxWidth="100dp"
+        android:singleLine="false"
+        android:text="@string/currency"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/black"
         android:textSize="15dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:width="100dp" />
     
 </RelativeLayout>

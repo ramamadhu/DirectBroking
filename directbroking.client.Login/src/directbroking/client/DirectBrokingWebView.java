@@ -164,7 +164,7 @@ public class DirectBrokingWebView extends Activity
             	marketValue = s[6];
             }
             // sql insert
-           stocksSource = new StockDataSource(this);
+           stocksSource = StockDataSource.Instance(this);
            stocksSource.open();
            System.out.printf("create stock %s, quantity %s\n", stock, stockQuantity);
            Stock newStock = stocksSource.createStock(stock, stockQuantity, costPrice, marketPrice, marketValue, marketValue);

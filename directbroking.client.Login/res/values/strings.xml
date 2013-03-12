@@ -12,7 +12,7 @@
     <string name="DblLogo">Direct Broking Logo</string>
     <string name="LoginButton">Login Button</string>
     <string name="NzxLogo">NZX Logo</string>
-    <string name="MyPortfolio">My portfolio</string>
+    <string name="MyPortfolio">My Portfolio</string>
     <string name="MyOrders">My Orders</string>
     <string name="MyAccount">My Account</string>
     <string name="AboutUs">About Direct Broking</string>
@@ -43,6 +43,7 @@
     <string name="remainingorder">Remaining Order</string>
     <string name="title_activity_my_account">MyAccount</string>
     <string name="balance">Balance</string>
-    <string name="interestrate">Interest Rate</string>
+    <string name="interestrate">Rate</string>
+    <string name="currency">CCY</string>
 
 </resources>

@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 public class StockDataSource {
+	  private static StockDataSource uniqueInstance;
 	  private SQLiteDatabase database;
 	  private final DatabaseHelper dbHelper;
 	  private final String[] portfolioColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colQuantity,
@@ -19,10 +20,20 @@ public class StockDataSource {
 	  private final String[] ordersColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colTicker, DatabaseHelper.colLastOrder,
 				DatabaseHelper.colQuantity };
 
-	  public StockDataSource(Context context) {
+	  private final String[] accountColumns = { DatabaseHelper.COLUMN_ID, DatabaseHelper.colAccountName, DatabaseHelper.colCCY,
+				DatabaseHelper.colBalance, DatabaseHelper.colInterestRate };
+
+	  private StockDataSource(Context context) {
 	    dbHelper = new DatabaseHelper(context);
 	  }
 
+	  public static synchronized StockDataSource Instance(Context context) {
+		    if(uniqueInstance == null) {
+		    	uniqueInstance = new StockDataSource(context); 
+		    }
+		    return uniqueInstance;
+		  }
+	  
 	  public void open() throws SQLException {
 	    database = dbHelper.getWritableDatabase();
 	    dbHelper.deleteAllEntries(database);
@@ -58,6 +69,16 @@ public class StockDataSource {
 	    return newStock;
 	  }
 
+	  public void addAccount(String accountName, String accountCurrency, String accountBalance, String interestRate)
+	  {
+		  ContentValues values = new ContentValues();
+		  values.put(DatabaseHelper.colAccountName, accountName);
+		  values.put(DatabaseHelper.colCCY, accountCurrency);
+		  values.put(DatabaseHelper.colBalance, accountBalance);
+		  values.put(DatabaseHelper.colInterestRate, interestRate);
+		  long insertId = database.insert(DatabaseHelper.accountTable, null, values);
+	  }
+	  
 	  public void deleteStock(Stock stock) {
 	    String ticker = stock.getTicker();
 	    System.out.println("Stock deleted with id: " + ticker);
@@ -80,6 +101,22 @@ public class StockDataSource {
 	    return stockList;
 	  }
 
+	  public List<Account> getAccountData() {
+		    List<Account> accountList = new ArrayList<Account>();
+
+		    Cursor cursor = database.query(DatabaseHelper.accountTable, accountColumns, null, null, null, null, null);
+		    cursor.moveToFirst();
+		    while (!cursor.isAfterLast()) {
+		      Account account = cursorToAccount(cursor);
+		      accountList.add(account);
+		      System.out.printf("getAccountData: AccName %s CCY %s Balance %s\n", account.getAccountName(), account.getCurrency(), account.getBalance());
+		      cursor.moveToNext();
+		    }
+		    // Make sure to close the cursor
+		    cursor.close();
+		    return accountList;
+		  }
+	  
 	  private Stock cursorToStock(Cursor cursor) {
 	    Stock stock = new Stock();
 	    stock.setTicker(cursor.getString(1));
@@ -89,6 +126,16 @@ public class StockDataSource {
 	    stock.setMarketValue(cursor.getString(5));
 	    stock.setUnrealisedPLNZD(cursor.getString(6));
 	    return stock;
+	  }
+	  
+	  private Account cursorToAccount(Cursor cursor) {
+		  Account account = new Account();
+		  account.setAccountName(cursor.getString(1));
+		  account.setCurrency(cursor.getString(2));
+		  account.setBalance(cursor.getString(3));
+		  account.setInterestRate(cursor.getString(4));
+
+		  return account;
 	  }
 	  
 	  public Stock createOrder(String ticker, String stockQuantity, String lastOrder)
