@@ -10,7 +10,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,7 +20,6 @@ import android.widget.ListView;
 public class MyAccount extends Activity {
 
 	private ListView listView1;
-	private ProgressDialog dialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +70,6 @@ public class MyAccount extends Activity {
             {
             	try 
             	{
-            		displayProgress();
             		String url = "https://www.directbroking.co.nz/DirectTrade/secure/portfolios.aspx";
             		SwitchActivity myPortfolioTask = new SwitchActivity(this, url, MyPortfolio.class);
                     myPortfolioTask.execute();
@@ -87,7 +84,6 @@ public class MyAccount extends Activity {
             {
             	try 
             	{
-            		displayProgress();
                 	String url = "https://www.directbroking.co.nz/DirectTrade/secure/orders.aspx";
                     SwitchActivity myOrdersTask = new SwitchActivity(this, url, MyOrders.class);
                     myOrdersTask.execute();
@@ -157,13 +153,5 @@ public class MyAccount extends Activity {
         View header = (View)getLayoutInflater().inflate(R.layout.activity_my_account, null);
         listView1.addHeaderView(header);
         listView1.setAdapter(adapter);
-
     }
-    
-	private void displayProgress() {
-		dialog = new ProgressDialog(this);
-		dialog.setTitle("Please wait");
-		dialog.setMessage("Processing request ...");
-		dialog.show();
-	}
 }

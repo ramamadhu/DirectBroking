@@ -31,11 +31,18 @@
         <activity
             android:name="directbroking.client.AboutUs"
             android:alwaysRetainTaskState="false"
-            android:clearTaskOnLaunch="true" />
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name="directbroking.client.MyOrders"
             android:alwaysRetainTaskState="false"
-            android:clearTaskOnLaunch="true" />
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="directbroking.client.MyAccount"
+            android:alwaysRetainTaskState="false"
+            android:clearTaskOnLaunch="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name="directbroking.client.Login"
             android:alwaysRetainTaskState="false"
@@ -47,10 +54,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="directbroking.client.MyAccount"
-            android:label="@string/title_activity_my_account" >
         </activity>
     </application>
 

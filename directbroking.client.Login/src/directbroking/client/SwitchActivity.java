@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,6 +23,7 @@ public class SwitchActivity extends AsyncTask<String,Void, String>
 	String url;
 	Class<?> activityClass;
 	Activity appActivity;
+	private ProgressDialog dialog;
 
 	public SwitchActivity(Activity activity, String urlString, Class<?> cls)
 	{
@@ -53,11 +55,16 @@ public class SwitchActivity extends AsyncTask<String,Void, String>
 	@Override
 	protected void onPreExecute()
 	{
+		dialog = new ProgressDialog(appActivity);
+		dialog.setTitle("Please wait");
+		dialog.setMessage("Processing request ...");
+		dialog.show();
 	}
 
 	@Override
 	protected void onPostExecute(String result)
 	{
+		dialog.dismiss();
 		if(onLoginSuccess(result))
 		{
 			appActivity.finish();
@@ -108,5 +115,4 @@ public class SwitchActivity extends AsyncTask<String,Void, String>
 		toast.setGravity(Gravity.CENTER, 0, 0);
 		toast.show();
 	}
-
 }
